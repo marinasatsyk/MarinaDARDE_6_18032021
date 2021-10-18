@@ -1,0 +1,41 @@
+.contener {
+    display: grid;
+    grid-template-rows: 1fr, 2fr;
+    // .logo {
+    //     grid-column: 1 / 2;
+    //     grid-row: 1 /2;
+    // }
+    // .invisible_link,
+    // .nav_header {
+    //     grid-column: 2 /3;
+    //     grid-row: 1 /2;
+    // }
+    // h1.header {
+    //     grid-column: 3 /4;
+    //     grid-row: 1 / 2;
+    // }
+}
+
+main {
+    .phographe {
+        display: grid;
+        grid-template: repeat(6, 1fr) / repeat(5, 1fr);
+        border: 1px solid black;
+        .parent_img {
+            border-radius: 50%;
+            height: 200px;
+            width: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+        img.img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    }
+}
