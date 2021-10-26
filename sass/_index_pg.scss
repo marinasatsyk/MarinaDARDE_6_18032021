@@ -17,10 +17,14 @@
 }
 
 main {
-    .phographe {
+    .photographers {
         display: grid;
-        grid-template: repeat(6, 1fr) / repeat(5, 1fr);
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .photographe {
+        display: grid;
         border: 1px solid black;
+        width: min-content;
         .parent_img {
             border-radius: 50%;
             height: 200px;

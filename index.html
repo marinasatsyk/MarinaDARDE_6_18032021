@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/style.css">
     <title>FishEye</title>
-    <!-- <script type="text/javascript" src="./data.json"></script> -->
+
     <script type="text/javascript" src="./script.js"></script>
 </head>
 
@@ -37,43 +37,24 @@
                     d="M135.437 7.94263H129.257L125.707 4.03638H114.004L110.454 7.94263H104.273C102.17 7.94263 100.329 9.63533 100.329 11.8489V35.026C100.329 37.1093 102.038 38.9322 104.273 38.9322H135.437C137.541 38.9322 139.382 37.2395 139.382 35.026V11.7187C139.382 9.63533 137.672 7.94263 135.437 7.94263ZM135.437 34.8957H104.405V11.7187H112.294L115.845 7.81242H124.129L127.548 11.7187H135.437V34.8957ZM119.921 13.6718C114.53 13.6718 110.191 17.9687 110.191 23.3072C110.191 28.6457 114.53 32.9426 119.921 32.9426C125.312 32.9426 129.651 28.6457 129.651 23.3072C129.651 17.9687 125.312 13.6718 119.921 13.6718ZM119.921 29.1666C116.765 29.1666 114.135 26.5624 114.135 23.4374C114.135 20.3124 116.765 17.7083 119.921 17.7083C123.077 17.7083 125.707 20.3124 125.707 23.4374C125.707 26.5624 123.077 29.1666 119.921 29.1666Z"
                     fill="#911C1C" />
             </svg>
-            <nav class="nav_header">
-                <ul class="nav_header__list">
-                    <li>#Portrait</li>
-                    <li>#Art</li>
-                    <li>#Fashion</li>
-                    <li>#Architecture</li>
-                    <li>#Travel</li>
-                    <li>#Sport</li>
-                    <li>#Animals</li>
-                    <li>#Events</li>
-                </ul>
-            </nav>
+            <!-- clone for tags -->
+            <template id="nav_hashtag">
+                <ul class="nav_header__list"></ul>
+            </template>
+            <!-- contener for tags -->
+            <div class="nav_header_contener"></div>
+
             <h1 class="header">Nos photographes</h1>
         </header>
 
 
+
         <main>
-            <a href="#">
-                <section class="phographe" id="243">
-                    <h2 class="name">Mimi Keel</h2>
+            <!-- clone for phtographes -->
+            <template id="template_photographe">
+                <div class="photographers"></div>
+            </template>
 
-                    <div class="city">London</div>
-                    <div class="country">UK</div>
-                    <ul class="tags portrait events travel animals">
-                        <li>#portrait</li>
-                        <li>#events</li>
-                        <li>#travel</li>
-                        <li>#animals</li>
-                    </ul>
-                    <div class="tagline">Voir le beau dans le quotidien</div>
-                    <div class="price">400&#8364/jour</div>
-                    <div class="parent_img"><img src="./FishEye_Photos/Sample_Photos/Mimi/Portrait_Nora.jpg" class="portrait img" alt=""></div>
-
-
-
-                </section>
-            </a>
         </main>
     </div>
 
