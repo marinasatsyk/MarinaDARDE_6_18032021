@@ -66,13 +66,9 @@ function photographerGetPhoto(photographer) {
 
 
 function CreatePhotographerHTML(photographer, data) {
-    console.log(photographer);
-    //variables
+
+
     const photographersMap = new Map();
-
-
-
-    //functions
 
 
     for (let photograher of data.photographers) {
@@ -118,7 +114,7 @@ function CreatePhotographerHTML(photographer, data) {
         let rank = [...photographersMap.values()][0].media;
         let sumLikes = 0;
         for (let like of rank) {
-            // console.log(like);
+
             sumLikes = sumLikes + like.likes;
 
         }
@@ -139,18 +135,14 @@ function CreatePhotographerHTML(photographer, data) {
 
     let rank = [...photographersMap.values()][0].media;
     let photograher = [...photographersMap.values()][0];
-    console.log(rank);
 
-    // for (let media of rank) {
-    //     console.log(media.image);
-    // }
+    console.log(photograher);
 
-    // let counter = 0;
     rank.forEach(media => {
-        // console.log(media)
+
 
         document.querySelector(".wrapper_media").innerHTML +=
-            `<article><a href="#" class="media ">
+            `<article class="media"><a href="#" class="media ">
 
                    ${photographerGetMedia(media)}
 
@@ -166,61 +158,31 @@ function CreatePhotographerHTML(photographer, data) {
             </a></article>`
     })
 
-    // for (let media of rank) {
-    //     console.log(media.likes);
 
-
-    // }
-
+    //il y a eu des erreures en nom de photos, j'ai  éliminé les tirets
 
     function photographerGetMedia(media) {
-        console.log(media);
+
         let rep = "../FishEye_Photos/Sample_Photos/" + photograher.name.split(" ")[0].replace("-", "_");
 
         for (let content in media) {
-            console.log(content + media[content]);
+
 
             if (content == "video") {
 
-                return `<div class="video"><video src="${rep}/${media[content]}" controls></video></div>`;
+                return `<div class="video"><video src="${rep}/${media[content].replace("-", "")}" controls></video></div>`;
 
 
             } else if (content == "image") {
 
-                return `<div class="img"><img src="${rep}/${media[content]}"></div>`;
+                return `<div class="img"><img src="${rep}/${media[content].replace("-", "")}"></div>`;
 
             }
         }
 
 
-        // let info_media = [...photographersMap.values()][0].media
 
-        //    for(let i = 0; i <= )
-
-
-        // for (let content in media) {
-
-        //     console.log(counter);
-        //     console.log(media);
-        //     console.log(info_media[counter][media]);
-
-
-
-
-        //     counter = counter + 1;
-        // }
     }
-
-
-
-
-
-
-
-
-
-
-
 
 
 }
