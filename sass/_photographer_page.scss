@@ -1,0 +1,108 @@
+body {
+    width: 80%;
+    margin: 0 auto;
+    header {
+        padding-top: 2vh;
+    }
+}
+
+.rating_price_likes {
+    position: fixed;
+    z-index: 10;
+    bottom: 0px;
+    right: 50px;
+    width: 20vw;
+    height: 6vh;
+    background: $color-secondary_bg;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    font-size: 2vh;
+    // .num_like {
+    //     // &::after {
+    //     //     content: "\f004";
+    //     //     font-family: "Font Awesome 5 Free";
+    //     //     color: black;
+    //     // }
+    // }
+    .wrapper_likes {
+        display: flex;
+    }
+}
+
+.btn {
+    width: 170px;
+    height: fit-content;
+    min-height: 69px;
+    background: $color_primary_bg;
+    color: $font_color_primary_bg;
+    .display_none {
+        display: none;
+    }
+    .underline {
+        border-bottom: 1px solid $font_color_primary_bg;
+    }
+}
+
+section.photographe_perso {
+    display: grid;
+    grid-template-areas: "a b c";
+    grid-template-columns: 1.2fr 1fr 1fr;
+    justify-items: start;
+    align-items: center;
+    background: $color-secondary_bg_1;
+    padding: 2rem;
+    position: relative;
+    .wraper_info_perso {
+        grid-area: a;
+        display: grid;
+        grid-template-rows: 1fr 0.5fr 0.5fr;
+        h2 {
+            font-size: 5.5vh;
+            margin-bottom: 10px;
+            grid-row-start: 1;
+        }
+        .citi_tagline_perso {
+            grid-row-start: 2;
+        }
+        .city {
+            font-size: 2vh;
+            margin-bottom: 10px;
+        }
+        .tagline {
+            font-size: 1.3vh;
+            // letter-spacing: 2rem;
+            margin-bottom: 10px;
+        }
+        .tags_perso {
+            grid-row-start: 3;
+        }
+        .tag_perso {
+            font-size: 1.4vh;
+        }
+    }
+    .form_modal {
+        grid-area: b;
+        width: 15vh;
+        height: 6vh;
+        background: $color_primary_bg;
+        color: white;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        align-self: start;
+        margin-top: 25 px;
+    }
+    .parent_img_perso {
+        grid-area: c;
+        justify-self: end;
+    }
+}
+
+ul.sort_media {
+    z-index: 10;
+}

@@ -1,21 +1,52 @@
+/* function is mobile */
+
+
+
+const isMobile = {
+    Android: function() {
+        return navigator.userAgent.match(/Android/i);
+    },
+    BlackBerry: function() {
+        return navigator.userAgent.match(/BlackBerry/i);
+    },
+    iOS: function() {
+        return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+    },
+    Opera: function() {
+        return navigator.userAgent.match(/Opera Mini/i);
+    },
+    Windows: function() {
+        return navigator.userAgent.match(/IEMobile/i) || navigator.userAgent.match(/WPDesktop/i);
+    },
+    any: function() {
+        return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+    }
+};
+
+if (isMobile.any()) {
+    document.body.classList.add("_touch");
+} else {
+    document.body.classList.add("_pc");
+}
+
 /* main function get Data  **/
 
 function GetFile(file, callback) {
-    /* let ls = localStorage.getItem("database");
-     if (ls) {
-         ls = JSON.parse(ls);
-         console.log("from local storage");
-         console.log(ls);
-         callback(ls);
-     } else {
-         */
-    fetch(file)
-        .then(response => response.json())
-        .then((result) => {
-            //localStorage.setItem("database", JSON.stringify(result));
-            callback(result);
-        })
-        // }
+    let ls = localStorage.getItem("database");
+    if (ls) {
+        ls = JSON.parse(ls);
+        console.log("from local storage");
+        console.log(ls);
+        callback(ls);
+    } else {
+        fetch(file)
+            .then(response => response.json())
+            .then((result) => {
+                localStorage.setItem("database", JSON.stringify(result));
+                callback(result);
+
+            })
+    }
 }
 
 /* Hashtag function**/
@@ -27,104 +58,163 @@ function GetFile(file, callback) {
 - media image
 - media video
 */
+//for make sort of the photographers by tags
+var Tags_Active = [];
 
 // my non-generic function called when my json file is ready
 const withDataCallBack = function(result) {
 
-    let out = new Set; //to sort tags without repetitions
-    const photographersMap = new Map();
-    for (let photographer of result.photographers) {
-        photographer.media = [];
-        photographersMap.set(photographer.id, photographer);
-        for (let tag of photographer.tags) {
-            out.add(tag);
-        }
-    }
+        let tagsSet = new Set; //to sort tags without repetitions
 
-    for (let media of result.media) {
-        let l_photographer = photographersMap.get(media.photographerId);
-        l_photographer.media.push(media);
-    }
+        const photographersMap = new Map();
+        /*to create new object with medias sorted by phtographer's ID  **/
 
-    // search array map sort !
+        for (let photographer of result.photographers) {
+            photographer.media = []; /* insert field that contain each photographer's medias   **/
 
+            photographersMap.set(photographer.id, photographer);
 
-    // shows the full json
-    console.log(result);
-    // extract the photographers array from it
-    console.log(result.photographers);
-    /*
-        let arr = [];
-        for (let i = 0; i < result.photographers.length; i++) {
-
-            arr.push(result.photographers[i].tags);
-        }
-
-        for (let k = 0; k < arr.length; k++) {
-            for (let j = 0; j < arr[k].length; j++) {
-
-                out.add(arr[k][j]);
+            for (let tag of photographer.tags) {
+                tagsSet.add(tag);
             }
 
         }
-        */
-
-    // la balise template avec element  à cloner
-    const tmpl = document.querySelector('#nav_hashtag');
-    // ton élément à cloner est un "ul", les éléments "multipliés" sont les "li"
-    const clone = document.importNode(tmpl.content, true);
-    /*voilà la seule partie qui devrait être dans ta boucle "for"
-    element à cloner dans la balise tmpl **/
-
-    for (let key of out) {
-        clone.querySelector(".nav_header__list").innerHTML += `<li>#${key}</li>`;
-
-    }
-    // elem parent dans lequel il faut mettre l'elem cloné
-    document.querySelector('.nav_header_contener').appendChild(clone);
-
-    /* Function for show photograhers**/
-    let btn;
-
-    // la balise template avec element  à cloner
-    const tmplPhotographer = document.querySelector('#template_photographe');
-
-    const clonePhotographer = document.importNode(tmplPhotographer.content, true);
-
-    function showTags(tags) {
-        let result = "";
-        for (let t of tags) { result += `<span class="tag">${t}</span>`; }
-        return result;
-    }
 
 
-    function photographerGetPhoto(p) {
-        let rep = "./FishEye_Photos/Sample_Photos/" + p.name.split(" ")[0].replace("-", "_");
-        for (let image of p.media) {
-            if (image.image) {
-                return rep + "/" + image.image;
-            }
+        for (let media of result.media) {
+            let l_photographer = photographersMap.get(media.photographerId);
+            console.log(l_photographer);
+            l_photographer.media.push(media); /* sort medias and insert to media field**/
         }
-        return `./FishEye_Photos/Sample_Photos/Photographers_ID_Photos/${p.portrait}`;
+
+        // search array map sort !
+
+
+
+
+        // the tag template with element  to clone
+        const tmpl = document.querySelector('#nav_hashtag');
+
+        const clone = document.importNode(tmpl.content, true);
+        /* element to clone in the tag tmpl **/
+
+        //function for make the first letter of string uppercase
+        String.prototype.capitalize = function() {
+            return this.charAt(0).toUpperCase() + this.slice(1);
+        }
+        for (let key of tagsSet) {
+            let tagUppercase = key.capitalize();
+            clone.querySelector(".nav_header__list").innerHTML += `<li class="tag_main">#${tagUppercase}</li>`;
+
+        }
+        // parent elem in which to put the cloned elem
+        document.querySelector('.nav_header_contener').appendChild(clone);
+
+        /* Function for show photograhers**/
+
+
+        // tag template with element  to clone
+        const tmplPhotographer = document.querySelector('#template_photographe');
+
+        const clonePhotographer = document.importNode(tmplPhotographer.content, true);
+
+        function showTags(tags) {
+            let result = "";
+            for (let t of tags) { result += `<span class="tag">#${t}</span>`; }
+            return result;
+        }
+
+        /*function for get first photo from all photo of photograper */
+        function photographerGetPhoto(p) {
+            let rep = "./FishEye_Photos/Sample_Photos/" + p.name.split(" ")[0].replace("-", "_");
+            for (let image of p.media) {
+                if (image.image) {
+                    return rep + "/" + image.image;
+                }
+            }
+            // return `./FishEye_Photos/Sample_Photos/Photographers_ID_Photos/${p.portrait}`;
+        }
+
+        /*  element to clone in the tmpl tag **/
+        photographersMap.forEach(p => {
+            console.log(p);
+
+            clonePhotographer.querySelector(".photographers").innerHTML += `<section class="photographe" id="${p.id}">
+                <a href="./html_pages/phographer_page.html?photographe=${p.id}">
+                    <div class="parent_img">
+                        <img src=${photographerGetPhoto(p)} class="portrait img" alt="">
+                    </div>
+                    <h2 class="name">${p.name}</h2>
+                    <div class="city country">${p.city}, ${p.country}</div>
+                    <div class="tagline">${p.tagline}</div>
+                    <div class="price">${p.price}&#8364/jour</div>
+                    <div class="tags">${showTags(p.tags)}</div>
+                </a>
+            </section>`;
+        });
+
+        // parent elem in which to put the cloned elem
+        document.querySelector('main').appendChild(clonePhotographer);
+
+
+        /* sort photographer by tag*/
+
+        //function for remove first symbol# to string tag and make it in lowercase
+        function parseTag(t) {
+            return (t.slice(1)).toLowerCase();
+        }
+
+        function updateTags() {
+            photographersMap.forEach(p => {
+                let doc = document.getElementById(p.id);
+                let found = false;
+                for (let tag of Tags_Active) {
+                    found = false;
+                    for (let ptag of p.tags) {
+                        if (ptag === tag) {
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found) {
+                        doc.style.display = "none";
+                        break;
+                    }
+                }
+
+                if (found || Tags_Active.length === 0) {
+                    doc.style.display = "flex";
+                }
+
+            });
+        }
+
+
+        document.querySelectorAll(".tag_main").forEach((elem) => {
+
+            elem.addEventListener("click", () => {
+
+                elem.classList.toggle("tag_activ");
+
+                if (elem.classList.contains("tag_activ")) {
+                    Tags_Active.push(parseTag(elem.textContent))
+                } else {
+                    let i = Tags_Active.indexOf(parseTag(elem.textContent));
+                    if (i >= 0) {
+                        Tags_Active.splice(i, 1);
+                    }
+                }
+
+                updateTags();
+
+            })
+        })
+
+
+        //
+
+
+
     }
-
-    /*  element à cloner dans la balise tmpl **/
-    photographersMap.forEach(p => {
-        clonePhotographer.querySelector(".photographers").innerHTML += `<section class="photographe" id="${p.id}">
-        <h2 class="name">${p.name}</h2>
-        <div class="city">${p.city}</div>
-        <div class="country">${p.country}</div>
-        <div class="tags">${showTags(p.tags)}</div>
-        <div class="tagline">${p.tagline}</div>
-        <div class="price">${p.price}&#8364/jour</div>
-        <div class="parent_img"><img src=${photographerGetPhoto(p)} class="portrait img" alt=""></div>
-        </section>`;
-    })
-
-    // elem parent dans lequel il faut mettre l'elem cloné
-    document.querySelector('main').appendChild(clonePhotographer);
-
-}
-
-// call my get-file function with the callback previously declared
+    // call my get-file function with the callback previously declared
 GetFile("./data.json", withDataCallBack);

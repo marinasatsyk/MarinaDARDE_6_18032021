@@ -1,4 +1,6 @@
 @use 'sass:math';
-@import "./index_pg";
 @import "./reset";
 @import "./variables";
+@import "./mixins";
+@import "./index_pg";
+@import "./photographer_page";

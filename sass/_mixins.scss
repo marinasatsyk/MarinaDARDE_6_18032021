@@ -1,0 +1,13 @@
+@mixin tag {
+    width: max-content;
+    height: 22px;
+    border: 0.5px solid #C4C4C4;
+    padding: 5px;
+    margin: 5px;
+    border-radius: 20px;
+    color: $color_primary_bg;
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    font-size: 12px;
+}
