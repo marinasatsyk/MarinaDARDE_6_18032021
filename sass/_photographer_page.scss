@@ -147,3 +147,12 @@ article.media {
         margin-bottom: 10px;
     }
 }
+
+body._touch {
+    .wrapper_media {
+        display: grid;
+        grid-template-columns: 1fr;
+        justify-items: center;
+        justify-content: space-evenly;
+    }
+}

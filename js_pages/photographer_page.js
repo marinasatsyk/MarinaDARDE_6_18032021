@@ -1,8 +1,3 @@
-/* for burger menu**/
-
-
-
-
 function GetFile(file, callback) {
     let ls = localStorage.getItem("database");
     if (ls) {
@@ -18,7 +13,7 @@ function GetFile(file, callback) {
             })
     }
 }
-
+/* for burger menu**/
 document.querySelector(".sort_media_arrow").addEventListener("click", () => {
     document.querySelectorAll(".change_status_display").forEach((element) => element.classList.toggle("display_none"));
     document.querySelectorAll(".underline_off").forEach((element) => element.classList.toggle("underline"));
@@ -63,7 +58,7 @@ function photographerGetPhoto(photographer) {
 }
 
 
-
+showScreen(); //func is in file functions commun
 
 function CreatePhotographerHTML(photographer, data) {
 
