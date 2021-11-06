@@ -12,6 +12,7 @@ body {
     bottom: 0px;
     right: 50px;
     width: 20vw;
+    min-width: 150px;
     height: 6vh;
     background: $color-secondary_bg;
     border-top-left-radius: 10px;
@@ -20,13 +21,6 @@ body {
     align-items: center;
     justify-content: space-evenly;
     font-size: 2vh;
-    // .num_like {
-    //     // &::after {
-    //     //     content: "\f004";
-    //     //     font-family: "Font Awesome 5 Free";
-    //     //     color: black;
-    //     // }
-    // }
     .wrapper_likes {
         display: flex;
     }
@@ -39,9 +33,6 @@ body {
     background: $color_primary_bg;
     color: $font_color_primary_bg;
     border-radius: 10px;
-    // display: flex;
-    // justify-content: center;
-    // align-items: center;
     font-weight: bold;
     .display_none {
         display: none;
@@ -99,11 +90,49 @@ section.photographe_perso {
         justify-content: center;
         border-radius: 10px;
         align-self: start;
-        margin-top: 25 px;
+        margin-top: 25px;
     }
     .parent_img_perso {
         grid-area: c;
         justify-self: end;
+    }
+}
+
+@media #{$mobile-only} {
+    section.photographe_perso {
+        grid-template-areas: "a b";
+        grid-template-columns: 2.3fr .7fr;
+        background: unset;
+        padding: unset;
+        .form_modal {
+            position: fixed;
+            z-index: 10;
+            bottom: 50px;
+            width: 25vh;
+            height: 5vh;
+            right: calc((100% - 25vh)/2);
+        }
+        .wraper_info_perso {
+            display: flex;
+            flex-direction: column;
+            h2 {
+                font-size: 4vh;
+            }
+            .city {
+                font-size: 1.4vh;
+            }
+            .tag_perso:first-child {
+                margin-left: 0;
+            }
+        }
+        .parent_img_perso {
+            grid-area: b;
+            width: 80px;
+            height: 80px;
+        }
+    }
+    .rating_price_likes {
+        display: none;
     }
 }
 
@@ -115,6 +144,15 @@ section.photographe_perso {
         margin-right: 1rem;
         font-weight: bold;
         font-size: 1.5vh;
+    }
+}
+
+@media #{$mobile-only} {
+    .menu_sortBy {
+        display: none;
+    }
+    main section.photographer_info {
+        margin-bottom: 25px;
     }
 }
 
