@@ -138,19 +138,18 @@ function CreatePhotographerHTML(photographer, data) {
 
         document.querySelector(".wrapper_media").innerHTML +=
             `<article class="media"><a href="#" class="media ">
-
-                   ${photographerGetMedia(media)}
-
-                    <div class="description">
+                ${photographerGetMedia(media)} 
+                                      
+                <div class="description">
                         <div class="text__description">
                             <h3>${media.title}</h3>
                         </div>
                         <span class="likes">${media.likes}<i class="fas fa-heart"></i></span>
-                    </div>
+                </div>
 
 
-
-            </a></article>`
+</a>
+           </article>`
     })
 
 
@@ -165,12 +164,12 @@ function CreatePhotographerHTML(photographer, data) {
 
             if (content == "video") {
 
-                return `<div class="video"><video src="${rep}/${media[content].replace("-", "")}" controls></video></div>`;
+                return `<div class="video media_content"><video src="${rep}/${media[content].replace("-", "")}" controls></video></div>`;
 
 
             } else if (content == "image") {
 
-                return `<div class="img"><img src="${rep}/${media[content].replace("-", "")}"></div>`;
+                return `<div class="img media_content"><img src="${rep}/${media[content].replace("-", "")}"></div>`;
 
             }
         }

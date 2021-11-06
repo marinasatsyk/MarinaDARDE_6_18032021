@@ -1,0 +1,8 @@
+$mobile: 736px!default;
+$tablet_min: 737px!default;
+$tablet_max: 1024px!default;
+$screen_min: 1025px;
+$screen_max: 1400px;
+$mobile-only: "all and (max-width: #{$mobile})";
+$tablet-only: "(min-width: #{$tablet_min}) and (max-width: #{$tablet_max})";
+$all-screen: "screen  and (min-width: #{$tablet_min})";
