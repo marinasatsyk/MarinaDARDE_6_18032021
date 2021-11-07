@@ -180,3 +180,25 @@ function CreatePhotographerHTML(photographer, data) {
 
 
 }
+
+/*Page modal*/
+const modalBtn = document.querySelector(".contact");
+const modalbg = document.querySelector(".bground");
+
+
+// launch modal event
+modalBtn.addEventListener("click", launchModal);
+// launch modal form
+function launchModal() {
+    modalbg.style.display = "block";
+
+}
+
+document.querySelector('.close').onclick = close;
+
+function close() {
+    if (modalbg.style.display == "block") {
+        modalbg.style.display = "none";
+    }
+
+}
