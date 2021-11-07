@@ -178,27 +178,38 @@ function CreatePhotographerHTML(photographer, data) {
 
     }
 
-
-}
-
-/*Page modal*/
-const modalBtn = document.querySelector(".contact");
-const modalbg = document.querySelector(".bground");
+    /*Page modal*/
+    const modalBtn = document.querySelector(".contact");
+    const modalbg = document.querySelector(".bground");
 
 
-// launch modal event
-modalBtn.addEventListener("click", launchModal);
-// launch modal form
-function launchModal() {
-    modalbg.style.display = "block";
+    // launch modal event
+    modalBtn.addEventListener("click", launchModal);
+    // launch modal form
+    function launchModal() {
+        modalbg.style.display = "block";
+        document.querySelector("body").classList.add("_lock");
+        document.querySelector(".content h2 > .nom_photographer").textContent = photograher.name
 
-}
-
-document.querySelector('.close').onclick = close;
-
-function close() {
-    if (modalbg.style.display == "block") {
-        modalbg.style.display = "none";
     }
+
+    document.querySelector('.close').onclick = close;
+
+    function close() {
+        if (modalbg.style.display == "block") {
+            modalbg.style.display = "none";
+            document.querySelector("body").classList.remove("_lock");
+        }
+
+    }
+
+
+
+
+
+
+
+
+
 
 }

@@ -65,10 +65,13 @@
 
         <div class="bground">
             <div class="content">
-                <span class="close"></span>
+                <div>
+                    <h2>Contactez-moi <br><span class="nom_photographer"></span></h2>
+                    <span class="close"></span>
+                </div>
                 <div class="modal-body">
 
-                    <h2>Contactez-moi <br><span class="nom_photographer"></span></h2>
+
 
                     <form name="reserve" action="index.html" method="get" onsubmit="return validate();">
                         <div class="formData" data-error="Veuillez entrer 2 caractères ou plus pour le champ du prenom" data-error-visible="false">
@@ -85,21 +88,38 @@
                             <input class="text-control" type="email" id="email" name="email" required /><br>
                         </div>
                         <div class="formData">
-                            <label for="email">Votre message</label><br>
-                            <input class="text-control" type="text" id="text" name="text" /><br>
+                            <label for="message">Votre message</label><br>
+                            <textarea class="text-control message" name="message" id="message" rows="10" maxlength="300"></textarea><br>
+
                         </div>
-
-
 
                         <input class="btn-submit button" type="submit" value="Envoyer" />
                     </form>
+
+
 
 
                 </div>
             </div>
         </div>
 
+        <!-- insertion of photo gallery -->
+        <div class="bgPhoto">
+            <div class="content contentPhotoGallery">
+                <span class="close"></span>
+                <div class="slider">
+                    <span class="slideLeft"></span>
+                    <div class="modal-body modal-bodyPhotoGallery">
+                        place de la photo choisie
+                    </div>
+                    <span class="slideRight"></span>
+                </div>
 
+                <!-- <input class="btn-close btn-submit button btnWelcome" value="Fermer" /> -->
+            </div>
+        </div>
+
+        <!-- end photo gallery -->
 
 
 

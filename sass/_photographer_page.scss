@@ -4,6 +4,9 @@ body {
     header {
         padding-top: 2vh;
     }
+    ._lock {
+        overflow: hidden;
+    }
 }
 
 .fas {
@@ -73,7 +76,6 @@ section.photographe_perso {
         }
         .tagline {
             font-size: 1.3vh;
-            // letter-spacing: 2rem;
             margin-bottom: 10px;
         }
         .tags_perso {
@@ -264,7 +266,13 @@ article.media {
 
 .modal-body {
     padding: 15px 8%;
-    margin: 150px auto;
+    // margin: 50px auto;
+    margin: 0 auto 25px auto;
+}
+
+.content h2 {
+    font-size: 4vh;
+    padding: 15px 8%;
 }
 
 label {
@@ -275,7 +283,8 @@ label {
     margin-bottom: 11px;
 }
 
-input {
+input,
+#message {
     padding: 8px;
     border: 0.8px solid #ccc;
     outline: none;
@@ -288,6 +297,10 @@ input {
     border-radius: 8px;
     font-size: 20px;
     height: 48px;
+}
+
+#message {
+    height: 150px;
 }
 
 .formData[data-error]::after {
@@ -410,4 +423,14 @@ input {
 
 .close:after {
     transform: rotate(-45deg);
+}
+
+input.btn-submit {
+    width: 170px;
+    height: 55px;
+    color: #fff;
+    background: #901C1C;
+    border-radius: 5px;
+    border: none;
+    margin-top: 15px;
 }
