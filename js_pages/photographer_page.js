@@ -137,7 +137,7 @@ function CreatePhotographerHTML(photographer, data) {
 
 
         document.querySelector(".wrapper_media").innerHTML +=
-            `<article class="media"><a href="#" class="media ">
+            `<article class="media">
                 ${photographerGetMedia(media)} 
                                       
                 <div class="description">
@@ -148,7 +148,7 @@ function CreatePhotographerHTML(photographer, data) {
                 </div>
 
 
-</a>
+
            </article>`
     })
 
@@ -164,12 +164,12 @@ function CreatePhotographerHTML(photographer, data) {
 
             if (content == "video") {
 
-                return `<div class="video media_content"><video src="${rep}/${media[content].replace("-", "")}" controls></video></div>`;
+                return `<div class="video media_content"><video src="${rep}/${media[content].replace("-", "")}"  class="video_content allmedia" controls></video></div>`;
 
 
             } else if (content == "image") {
 
-                return `<div class="img media_content"><img src="${rep}/${media[content].replace("-", "")}"></div>`;
+                return `<div class="img media_content"><img src="${rep}/${media[content].replace("-", "")}"  class="img_content allmedia"></div>`;
 
             }
         }
@@ -182,7 +182,6 @@ function CreatePhotographerHTML(photographer, data) {
     const modalBtn = document.querySelector(".contact");
     const modalbg = document.querySelector(".bground");
 
-
     // launch modal event
     modalBtn.addEventListener("click", launchModal);
     // launch modal form
@@ -190,24 +189,58 @@ function CreatePhotographerHTML(photographer, data) {
         modalbg.style.display = "block";
         document.querySelector("body").classList.add("_lock");
         document.querySelector(".content h2 > .nom_photographer").textContent = photograher.name
-
     }
 
-    document.querySelector('.close').onclick = close;
+    document.querySelector('.close').addEventListener("click", () => {
+        close(modalbg)
+    })
 
-    function close() {
-        if (modalbg.style.display == "block") {
-            modalbg.style.display = "none";
+    function close(elem) {
+        if (elem.style.display == "block") {
+            elem.style.display = "none";
             document.querySelector("body").classList.remove("_lock");
         }
-
     }
+    showSlidePhoto();
+}
 
 
 
+//function for show big media after click on
+function showSlidePhoto() {
+    let allMedia = document.querySelectorAll(".allmedia");
+    let placePhoto = document.querySelector(".modal-bodyPhotoGallery");
+    let wrapShowPhoto = document.querySelector(".bgPhoto");
+    console.log(allMedia);
 
 
+    allMedia.forEach(media => {
 
+
+        media.addEventListener("click", () => {
+            for (let item in allMedia) {
+                console.log(item);
+            }
+            // console.log(media);
+            wrapShowPhoto.style.display = "block";
+            document.querySelector("body").classList.add("_lock");
+
+            if (media.localName == "video") {
+                placePhoto.innerHTML = `<video src=${media.attributes[0].value} alt="" controls>
+            <div>${media.offsetParent.nextElementSibling.innerText}</div>`
+            } else if (media.localName == "img") {
+                placePhoto.innerHTML = `<img src=${media.attributes[0].value} alt="">
+                            <div>${media.offsetParent.nextElementSibling.innerText}</div>`
+            }
+        })
+    })
+
+    document.querySelector('.bgPhoto .close').addEventListener("click", () => {
+        if (wrapShowPhoto.style.display == "block") {
+            wrapShowPhoto.style.display = "none";
+            document.querySelector("body").classList.remove("_lock");
+        }
+    })
 
 
 
