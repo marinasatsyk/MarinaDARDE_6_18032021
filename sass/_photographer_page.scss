@@ -1,12 +1,14 @@
 body {
     width: 80%;
     margin: 0 auto;
-    header {
-        padding-top: 2vh;
-    }
-    ._lock {
-        overflow: hidden;
-    }
+}
+
+header {
+    padding-top: 2vh;
+}
+
+._lock {
+    overflow: hidden;
 }
 
 .fas {
@@ -467,23 +469,26 @@ input.btn-submit {
         position: relative;
         color: black;
         padding-top: 10px;
+        margin: 0 auto;
     }
     .slider {
         display: flex;
         height: 80%;
+        margin-top: 10%;
+        align-items: center;
         .slideLeft {
-            position: absolute;
-            top: 50%;
+            position: relative;
             width: 32px;
             height: 32px;
             opacity: 1;
             cursor: pointer;
             transform: scale(0.7);
+            z-index: 11;
+            margin: 0 30px 0 100px;
             &::before,
             &::after {
                 position: absolute;
-                left: 15px;
-                content: " ";
+                content: "";
                 height: 33px;
                 width: 7px;
                 background-color: #901C1C;
@@ -495,23 +500,21 @@ input.btn-submit {
             }
         }
         .slideRight {
-            position: absolute;
-            top: 50%;
-            right: 15px;
+            position: relative;
             width: 32px;
             height: 32px;
             opacity: 1;
             cursor: pointer;
             transform: scale(0.7);
+            margin: 0 100px 0 30px;
             &::before,
             &::after {
                 position: absolute;
-                left: 15px;
-                content: " ";
+                content: "";
                 height: 33px;
                 width: 7px;
                 background-color: #901C1C;
-                transform: rotate(135deg);
+                transform: rotate(-45deg);
             }
             &::after {
                 top: 21px;
@@ -522,7 +525,6 @@ input.btn-submit {
             overflow: hidden;
             position: relative;
             border-radius: 5px;
-            min-width: fit-content;
             padding: unset;
             video,
             img {

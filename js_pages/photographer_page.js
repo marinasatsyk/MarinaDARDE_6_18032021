@@ -20,6 +20,8 @@ document.querySelector(".sort_media_arrow").addEventListener("click", () => {
 
 });
 
+var MAP_Media = new Map();
+
 
 GetFile("../data.json", withDataCallBack);
 
@@ -129,9 +131,9 @@ function CreatePhotographerHTML(photographer, data) {
 
 
     let rank = [...photographersMap.values()][0].media;
-    let photograher = [...photographersMap.values()][0];
+    let l_photographer = [...photographersMap.values()][0];
 
-    console.log(photograher);
+    console.log(l_photographer);
 
     rank.forEach(media => {
 
@@ -152,31 +154,38 @@ function CreatePhotographerHTML(photographer, data) {
            </article>`
     })
 
-
     //il y a eu des erreures en nom de photos, j'ai  éliminé les tirets
 
     function photographerGetMedia(media) {
+        console.log(media);
 
-        let rep = "../FishEye_Photos/Sample_Photos/" + photograher.name.split(" ")[0].replace("-", "_");
+        let rep = "../FishEye_Photos/Sample_Photos/" + l_photographer.name.split(" ")[0].replace("-", "_");
 
-        for (let content in media) {
-
-
-            if (content == "video") {
-
-                return `<div class="video media_content"><video src="${rep}/${media[content].replace("-", "")}"  class="video_content allmedia" controls></video></div>`;
-
-
-            } else if (content == "image") {
-
-                return `<div class="img media_content"><img src="${rep}/${media[content].replace("-", "")}"  class="img_content allmedia"></div>`;
-
-            }
+        if (media.hasOwnProperty("video")) {
+            let file = rep + "/" + media.video.replace("-", "")
+            MAP_Media.set(media.video.replace("-", ""), media);
+            return `<div class="video media_content"><video src="${file}"  class="video_content allmedia" controls></video></div>`;
+        } else if (media.hasOwnProperty("image")) {
+            let file = rep + "/" + media.image.replace("-", "")
+            MAP_Media.set(media.image.replace("-", ""), media);
+            return `<div class="img media_content"><img src="${file}"  class="img_content allmedia"></div>`;
         }
 
+        /*
+         if (content == "video") {
+
+             return `<div class="video media_content"><video src="${rep}/${media[content].replace("-", "")}"  class="video_content allmedia" controls></video></div>`;
 
 
+         } else if (content == "image") {
+
+             return `<div class="img media_content"><img src="${rep}/${media[content].replace("-", "")}"  class="img_content allmedia"></div>`;
+
+         }
+         */
     }
+
+
 
     /*Page modal*/
     const modalBtn = document.querySelector(".contact");
@@ -204,39 +213,73 @@ function CreatePhotographerHTML(photographer, data) {
     showSlidePhoto();
 }
 
+function FactoryImage(media) {
+    let folders = media.attributes[0].value.split("/");
+    let key = folders[folders.length - 1];
+    let obj = MAP_Media.get(key);
+    return `<img src=${media.attributes[0].value} alt="">
+    <div>${obj.title}</div>`;
+}
 
+function FactoryVideo(media) {
+    let folders = media.attributes[0].value.split("/");
+    let key = folders[folders.length - 1];
+    let obj = MAP_Media.get(key);
+    return `<video src=${media.attributes[0].value} alt="" controls>
+    <div>${obj.title}</div>`;
+}
+
+function FactoryMedia(media) {
+    switch (media.localName) {
+        case "video":
+            return FactoryVideo(media);
+        default:
+            return FactoryImage(media);
+    }
+}
 
 //function for show big media after click on
 function showSlidePhoto() {
     let allMedia = document.querySelectorAll(".allmedia");
     let placePhoto = document.querySelector(".modal-bodyPhotoGallery");
     let wrapShowPhoto = document.querySelector(".bgPhoto");
+
+    //=================
     console.log(allMedia);
+    for (let i = 0; i < allMedia.length; i++) {
+        let i0 = (i - 1 + allMedia.length) % allMedia.length;
+        let i1 = (i + 1 + allMedia.length) % allMedia.length;
+        allMedia[i].before = allMedia[i0];
+        allMedia[i].after = allMedia[i1];
+    }
 
-
-    allMedia.forEach(media => {
-
+    //==================
+    for (let i = 0; i < allMedia.length; i++) {
+        let media = allMedia[i];
 
         media.addEventListener("click", () => {
-            for (let item in allMedia) {
-                console.log(item);
-            }
-            // console.log(media);
-            wrapShowPhoto.style.display = "block";
-            document.querySelector("body").classList.add("_lock");
+            console.log(media);
 
-            if (media.localName == "video") {
-                placePhoto.innerHTML = `<video src=${media.attributes[0].value} alt="" controls>
-            <div>${media.offsetParent.nextElementSibling.innerText}</div>`
-            } else if (media.localName == "img") {
-                placePhoto.innerHTML = `<img src=${media.attributes[0].value} alt="">
-                            <div>${media.offsetParent.nextElementSibling.innerText}</div>`
-            }
+            wrapShowPhoto.style.display = "flex";
+            document.querySelector("body").classList.add("_lock");
+            placePhoto.innerHTML = FactoryMedia(media);
+
+            document.querySelector(".slideLeft").addEventListener("click", () => {
+                console.log("click L");
+                media = media.before ? media.before : media;
+                placePhoto.innerHTML = FactoryMedia(media);
+            })
+
+            document.querySelector(".slideRight").addEventListener("click", () => {
+                console.log("click R");
+                media = media.after ? media.after : media;
+                placePhoto.innerHTML = FactoryMedia(media);
+            })
         })
-    })
+    }
 
     document.querySelector('.bgPhoto .close').addEventListener("click", () => {
-        if (wrapShowPhoto.style.display == "block") {
+        if (wrapShowPhoto.style.display !== "none") {
             wrapShowPhoto.style.display = "none";
             document.querySelector("body").classList.remove("_lock");
         }
