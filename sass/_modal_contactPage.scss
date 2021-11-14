@@ -1,0 +1,147 @@
+.bground {
+    display: none;
+    position: fixed;
+    z-index: 10;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+    background-color: rgba(196, 196, 196, 0.4);
+}
+
+.content {
+    margin: 10% auto;
+    width: 100%;
+    max-width: 500px;
+    animation-name: modalopen;
+    animation-duration: 0.8s;
+    background: #DB8876;
+    opacity: 1;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    color: black;
+    padding-top: 10px;
+    @media #{$mobile-only} {
+        margin: unset;
+        height: 100%;
+    }
+}
+
+.modal-body {
+    padding: 15px 8%;
+    margin: 0 auto 25px auto;
+}
+
+.content h2 {
+    font-size: 4vh;
+    padding: 15px 8%;
+}
+
+label {
+    // font-family: var(--font-default);
+    font-size: 17px;
+    font-weight: normal;
+    display: inline-block;
+    margin-bottom: 11px;
+}
+
+input,
+#message {
+    padding: 8px;
+    border: 0.8px solid #ccc;
+    outline: none;
+}
+
+.text-control {
+    margin: 0;
+    padding: 8px;
+    width: 100%;
+    border-radius: 8px;
+    font-size: 20px;
+    height: 48px;
+}
+
+#message {
+    height: 150px;
+}
+
+.formData[data-error]::after {
+    content: attr(data-error);
+    font-size: .9em;
+    color: #e54858;
+    display: block;
+    margin-top: 7px;
+    margin-bottom: 7px;
+    text-align: right;
+    line-height: 0.3;
+    opacity: 0;
+    transition: 0.3s;
+}
+
+.formData[data-error-visible="true"]::after {
+    opacity: 1;
+}
+
+.formData[data-error-visible="true"] .text-control {
+    border: 2px solid #e54858;
+}
+
+.checkbox-label,
+.checkbox2-label {
+    position: relative;
+    margin-left: 36px;
+    font-size: 12px;
+    font-weight: normal;
+}
+
+.close {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    width: 32px;
+    height: 32px;
+    opacity: 1;
+    cursor: pointer;
+    transform: scale(0.7);
+}
+
+.close:before,
+.close:after {
+    position: absolute;
+    left: 15px;
+    content: " ";
+    height: 45px;
+    width: 3px;
+    background-color: #fff;
+}
+
+.close:before {
+    transform: rotate(45deg);
+}
+
+.close:after {
+    transform: rotate(-45deg);
+}
+
+input.btn-submit {
+    width: 170px;
+    height: 55px;
+    color: #fff;
+    background: #901C1C;
+    border-radius: 5px;
+    border: none;
+    margin-top: 15px;
+    cursor: pointer;
+}
+
+@keyframes modalopen {
+    from {
+        opacity: 0;
+        transform: translateY(-150px);
+    }
+    to {
+        opacity: 1;
+    }
+}

@@ -1,0 +1,100 @@
+//page modal
+.bgPhoto {
+    display: none;
+    position: fixed;
+    z-index: 11;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+    background-color: #E5E5E5;
+    .close {
+        &::before,
+        &::after {
+            height: 50px;
+            width: 7px;
+            background-color: #901C1C;
+        }
+    }
+    .content {
+        max-width: unset;
+        // margin: 10% auto;
+        width: 100%;
+        height: 100%;
+        // animation-name: modalopen;
+        // animation-duration: var(--modal-duration);
+        background: #E5E5E5;
+        opacity: 1;
+        border-radius: 10px;
+        overflow: hidden;
+        position: relative;
+        color: black;
+        padding-top: 10px;
+        margin: 0 auto;
+    }
+    .slider {
+        display: flex;
+        height: 80%;
+        margin-top: 10%;
+        align-items: center;
+        .slideLeft {
+            position: relative;
+            width: 32px;
+            height: 32px;
+            opacity: 1;
+            cursor: pointer;
+            transform: scale(0.7);
+            z-index: 11;
+            margin: 0 30px 0 100px;
+            &::before,
+            &::after {
+                position: absolute;
+                content: "";
+                height: 33px;
+                width: 7px;
+                background-color: #901C1C;
+                transform: rotate(45deg);
+            }
+            &::after {
+                top: 21px;
+                transform: rotate(-45deg);
+            }
+        }
+        .slideRight {
+            position: relative;
+            width: 32px;
+            height: 32px;
+            opacity: 1;
+            cursor: pointer;
+            transform: scale(0.7);
+            margin: 0 100px 0 30px;
+            &::before,
+            &::after {
+                position: absolute;
+                content: "";
+                height: 33px;
+                width: 7px;
+                background-color: #901C1C;
+                transform: rotate(-45deg);
+            }
+            &::after {
+                top: 21px;
+                transform: rotate(45deg);
+            }
+        }
+        .modal-bodyPhotoGallery {
+            overflow: hidden;
+            position: relative;
+            border-radius: 5px;
+            padding: unset;
+            video,
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                object-position: center;
+            }
+        }
+    }
+}

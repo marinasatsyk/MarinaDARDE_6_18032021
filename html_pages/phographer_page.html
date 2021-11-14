@@ -45,17 +45,21 @@
             <!--tag for sort  media content-->
             <div class="menu_sortBy">
                 <h2>Trier par</h2>
-                <ul class="sort_media btn">
-                    <li class="sort_media sort_media_arrow underline_off">
-                        <span class="text_sort">Popularité</span>
-                        <i class="fas fa-angle-down change_status_display"></i>
-                        <i class="fas fa-angle-up display_none change_status_display"></i>
-                    </li>
+                <div class="wrapper_sort">
+                    <ul class="sort_media btn">
+                        <li class="sort_media sort_media_arrow underline">
+                            <span class="text_sort">Popularité</span>
+                            <i class="fas fa-angle-down change_status_display"></i>
+                            <!-- <i class="fas fa-angle-up display_none change_status_display"></i> -->
+                        </li>
 
-                    <li class="sort_media sort_media_first display_none change_status_display underline_off">Date</li>
+                        <li class="sort_media sort_media_first  change_status_display underline">Date</li>
 
-                    <li class="sort_media sort_media_second display_none change_status_display">Titre</li>
-                </ul>
+                        <li class="sort_media sort_media_second  change_status_display">Titre</li>
+                    </ul>
+
+                </div>
+
             </div>
 
 
@@ -76,12 +80,12 @@
                     <form name="reserve" action="index.html" method="get" onsubmit="return validate();">
                         <div class="formData" data-error="Veuillez entrer 2 caractères ou plus pour le champ du prenom" data-error-visible="false">
                             <label for="first">Prénom</label><br>
-                            <input class="text-control" type="text" id="first" name="first" minlength="2" required /><br>
+                            <input class="text-control" type="text" id="firstName" name="first" minlength="2" required /><br>
 
                         </div>
                         <div class="formData" data-error="Veuillez entrer 2 caractères ou plus pour le champ du nom">
                             <label for="last">Nom</label><br>
-                            <input class="text-control" type="text" id="last" name="last" minlength="2" required /><br>
+                            <input class="text-control" type="text" id="lastName" name="last" minlength="2" required /><br>
                         </div>
                         <div class="formData" data-error="Veuillez entrer email correct">
                             <label for="email">E-mail</label><br>
