@@ -78,6 +78,9 @@ input,
     line-height: 0.3;
     opacity: 0;
     transition: 0.3s;
+    @media #{$mobile-only} {
+        font-size: .7em;
+    }
 }
 
 .formData[data-error-visible="true"]::after {
@@ -142,6 +145,7 @@ input.btn-submit {
         transform: translateY(-150px);
     }
     to {
+        transform: translateY(0px);
         opacity: 1;
     }
 }

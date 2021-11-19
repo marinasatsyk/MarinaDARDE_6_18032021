@@ -39,18 +39,6 @@ function withDataCallBack(data) {
 }
 
 
-/*   menu sort media**/
-
-//animation medu sort media
-let menu_sort = document.querySelector(".wrapper_sort");
-menu_sort.addEventListener("click", () => {
-    menu_sort.classList.toggle("wrapper_anim");
-    document.querySelector(".fa-angle-down").classList.toggle("animation_arrow");
-    // document.querySelector("ul.sort_media li::after").classList.toggle("underline");
-
-});
-
-
 
 
 
@@ -81,46 +69,39 @@ showScreen(); //func is in file functions commun
 
 function CreatePhotographerHTML(photographer, data) {
 
-
     const photographersMap = new Map();
-
-
-    for (let photograher of data.photographers) {
-        photograher.media = [];
-        photographersMap.set(photographer.id, photographer);
-    }
+    photographer.media = [];
+    photographersMap.set(photographer.id, photographer);
 
     for (let media of data.media) {
-
-        let l_photographer = photographersMap.get(photographer.id);
         if (media.photographerId == photographer.id) {
-            l_photographer.media.push(media);
+            photographer.media.push(media);
         }
-
     }
+
     console.log(photographersMap);
     //information on the header of page 
     document.querySelector(".photographer_info").innerHTML =
         `<section class="photographe photographe_perso" id="${photographer.id}">
-            <span class="wraper_info_perso">
-            <h2 class="name name_perso">${photographer.name}</h2>
-            
-            <div class="citi_tagline_perso">
-                <div class="city country page_perso">${photographer.city}, ${photographer.country}</div>
-                <div class="tagline page_perso">${photographer.tagline}</div>
-            </div>    
+			<span class="wraper_info_perso">
+			<h2 class="name name_perso">${photographer.name}</h2>
+			
+			<div class="citi_tagline_perso">
+				<div class="city country page_perso">${photographer.city}, ${photographer.country}</div>
+				<div class="tagline page_perso">${photographer.tagline}</div>
+			</div>	
 
-            <div class="tags tags_perso">${showTags(photographer.tags)}</div>
-            </span>        
-            
-           
-            <div class="form_modal contact">Contactez-moi</div>
+			<div class="tags tags_perso">${showTags(photographer.tags)}</div>
+			</span>		
+			
+		
+			<div class="form_modal contact">Contactez-moi</div>
 
-            <div class="parent_img parent_img_perso">
-                <img src=${photographerGetPhoto(photographer)} class="portrait img" alt="">
-            </div>
-        
-    </section>`
+			<div class="parent_img parent_img_perso">
+				<img src=${photographerGetPhoto(photographer)} class="portrait img" alt="">
+			</div>
+		
+	</section>`
 
 
 
@@ -132,7 +113,7 @@ function CreatePhotographerHTML(photographer, data) {
     function photographerGetMedia(media) {
         // console.log(media);
 
-        let rep = "../FishEye_Photos/Sample_Photos/" + l_photographer.name.split(" ")[0].replace("-", "_");
+        let rep = "../FishEye_Photos/Sample_Photos/" + photographer.name.split(" ")[0].replace("-", "_");
 
         if (media.hasOwnProperty("video")) {
             let file = rep + "/" + media.video.replace("-", "")
@@ -153,16 +134,56 @@ function CreatePhotographerHTML(photographer, data) {
 
     //SHOW  TOTAL RANK OF PHOTOGRAPHER 
 
-    let rank = [...photographersMap.values()][0].media;
-    console.log(rank);
-    let l_photographer = [...photographersMap.values()][0];
-    console.log(l_photographer);
+    let rank = photographer.media;
+    const MapMedia = new Map();
+    for (let i in rank) {
+        MapMedia.set(rank[i].id, i);
+    }
+
+
+    //sort by likes============================================
+    const Map_like = new Map();
+    let ar = [];
+
+
+    for (let i = 0; i < rank.length; i++) {
+        Map_like.set(rank[i].likes, rank[i])
+    }
+
+    for (const [key] of Map_like) {
+        ar.push(key)
+    }
+
+    ar = ar.sort(function(a, b) {
+        return b - a;
+    })
+
+    Map_like.delete();
+
+    for (let i = 0; i < ar.length; i++) {
+
+        for (let k = 0; k < ar.length; k++) {
+            if (ar[i] == rank[k].likes) {
+                Map_like.set(ar[i], rank[k]);
+                break
+            }
+        }
+
+    }
+
+    console.log(Map_like); // map with sorted content 
+
+    //===============================================================
+
+
+
+    console.log(photographer);
 
     function showRank() {
 
         let sumLikes = 0;
         for (let like of rank) {
-            sumLikes = sumLikes + like.likes;
+            sumLikes = sumLikes + parseInt(like.likes);
         }
         return sumLikes;
     }
@@ -170,10 +191,12 @@ function CreatePhotographerHTML(photographer, data) {
 
     document.querySelector(".rating_price_likes").innerHTML =
 
-        `<div class="wrapper_likes"><div class="num_like">${showRank()}</div>
-     <i class="fas fa-heart"></i></div>
-     <div class="price page_perso">${photographer.price}&#8364/jour</div>
-     `
+        `<div class="wrapper_likes">
+			<div class="num_like">${showRank()}</div>
+			<i class="fas fa-heart"></i>
+		</div>
+		<div class="price page_perso">${photographer.price}€/jour</div>
+	`
 
 
     /*creation media conent */
@@ -181,35 +204,127 @@ function CreatePhotographerHTML(photographer, data) {
     //func for show the rank of each media 
 
 
+
+    function LinkLikeEvents() {
+        // for increase the likes on click
+        let likesAll = document.querySelectorAll(".iterator");
+        for (let i = 0; i < likesAll.length; i++) {
+            let like = likesAll[i];
+            like.addEventListener("click", () => {
+                UpdateLike(like);
+            })
+
+        }
+    }
+
     /*MAIN CONTENT  media default based on data*/
-    rank.forEach(media => {
-        console.log(media);
-        document.querySelector(".wrapper_media").innerHTML +=
-            `<article class="media">
-             ${photographerGetMedia(media)} 
-                                   
-             <div class="description">
-                     <div class="text__description">
-                         <h3>${media.title}</h3>
-                     </div>
-                     <span class="likes">${+media.likes}<i class="fas fa-heart iterator"></i></span>
-             </div>
-        </article>`
-    })
+    let ls = localStorage.getItem("likes");
+    let likes = ls ? JSON.parse(ls) : [];
 
+    function buildMedia(pRank) {
 
-    // for increase the likes on click
-    let likesAll = document.querySelectorAll(".iterator");
-    for (let i = 0; i < likesAll.length; i++) {
-        let like = likesAll[i];
+        document.querySelector(".wrapper_media").innerHTML = "";
 
-        like.addEventListener("click", () => {
-            like.parentElement.childNodes[0].textContent = +like.parentElement.childNodes[0].textContent + 1;
+        pRank.forEach(media => {
 
-            document.querySelector(".num_like").textContent = +document.querySelector(".num_like").textContent + 1;
+            console.log(media);
+            let media_id = media.id;
+            let l_classActive = "";
+            if (likes.indexOf("" + media_id) >= 0) {
+                l_classActive = " liked";
+                console.log("LIKE " + media_id);
+            }
+
+            document.querySelector(".wrapper_media").innerHTML +=
+                `<article class="media">
+				${photographerGetMedia(media)} 
+									
+				<div class="description">
+						<div class="text__description">
+							<h3>${media.title}</h3>
+						</div>
+						<span class="likes">${+media.likes}<i class="fas fa-heart iterator${l_classActive}" id="media_${media_id}"></i></span>
+				</div>
+			</article>`
+
         })
 
+        LinkLikeEvents();
     }
+
+    buildMedia(rank);
+
+    const IncrementLike = function(LikeElement) {
+        LikeElement.classList.toggle("liked");
+        LikeElement.parentElement.childNodes[0].textContent = +LikeElement.parentElement.childNodes[0].textContent + 1;
+        document.querySelector(".num_like").textContent = +document.querySelector(".num_like").textContent + 1;
+    }
+
+    const DecrementLike = function(LikeElement) {
+        LikeElement.classList.toggle("liked");
+        LikeElement.parentElement.childNodes[0].textContent = +LikeElement.parentElement.childNodes[0].textContent - 1;
+        document.querySelector(".num_like").textContent = +document.querySelector(".num_like").textContent - 1;
+    }
+
+    const UpdateLike = function(LikeElement) {
+        let like_id = LikeElement.id;
+        let media_id = like_id.slice(6);
+        let ls = localStorage.getItem("likes");
+        let l_Media = rank[MapMedia.get(+media_id)];
+
+        if (!ls) {
+            localStorage.setItem("likes", JSON.stringify([+media_id]));
+            IncrementLike(LikeElement);
+            l_Media.likes++;
+            return;
+        }
+
+        let likes = JSON.parse(ls);
+        let index = likes.indexOf(+media_id);
+        if (index >= 0) {
+            DecrementLike(LikeElement);
+            likes.splice(index, 1);
+            l_Media.likes--;
+        } else {
+            IncrementLike(LikeElement);
+            likes.push(+media_id);
+            l_Media.likes++;
+        }
+        localStorage.setItem("likes", JSON.stringify(likes));
+    }
+
+
+
+    /*   menu sort media**/
+
+    //animation medu sort media
+    let arrow_sort = document.querySelector(".change_status_display");
+    arrow_sort.addEventListener("click", (event) => {
+        let menu_sort = document.querySelector(".wrapper_sort");
+        menu_sort.classList.toggle("wrapper_anim");
+        arrow_sort.classList.toggle("animation_arrow");
+        event.preventDefault();
+        event.stopPropagation();
+        // document.querySelector("ul.sort_media li::after").classList.toggle("underline");
+    });
+
+    document.querySelector(".like_sort").addEventListener("click", () => {
+        rank.sort(function(a, b) { return a.likes > b.likes ? -1 : 1; });
+        console.log(rank);
+        buildMedia(rank);
+    });
+
+    document.querySelector(".date_sort").addEventListener("click", () => {
+        rank.sort(function(a, b) { return a.date > b.date ? -1 : 1; });
+        console.log(rank);
+        buildMedia(rank);
+    });
+
+    document.querySelector(".text_sort").addEventListener("click", () => {
+        rank.sort(function(a, b) { return a.title > b.title ? 1 : -1; });
+        console.log(rank);
+        buildMedia(rank);
+    });
 
 
 
@@ -233,11 +348,11 @@ function CreatePhotographerHTML(photographer, data) {
     }
 
     //disable error warning
-    formData.forEach(elem => elem.addEventListener("click", back = () => {
+    formData.forEach(elem => elem.addEventListener("click", () => {
         elem.dataset.errorVisible = "false";
     }));
 
-    inputIn.forEach(elem => elem.addEventListener("click", back = () => {
+    inputIn.forEach(elem => elem.addEventListener("click", () => {
         elem.style.background = '#fff';
     }));
 
@@ -286,12 +401,12 @@ function CreatePhotographerHTML(photographer, data) {
             }
 
             // if (elem.id == 'firstName' && fisrtChecked == true) {
-            //     result[elem.id] += elem.value;
+            //	 result[elem.id] += elem.value;
 
             // } else if (elem.id == 'lastName' && lastChecked == true) {
-            //     result[elem.id] += elem.value;
+            //	 result[elem.id] += elem.value;
             // } else if (elem.id == 'email' && emailChecked == true) {
-            //     result[elem.id] += elem.value;
+            //	 result[elem.id] += elem.value;
 
             // }
 
@@ -340,7 +455,7 @@ function FactoryImage(media) {
     let key = folders[folders.length - 1];
     let obj = MAP_Media.get(key);
     return `<img src=${media.attributes[0].value} alt="">
-    <div>${obj.title}</div>`;
+	<div>${obj.title}</div>`;
 }
 
 function FactoryVideo(media) {
@@ -348,7 +463,7 @@ function FactoryVideo(media) {
     let key = folders[folders.length - 1];
     let obj = MAP_Media.get(key);
     return `<video src=${media.attributes[0].value} alt="" controls>
-    <div>${obj.title}</div>`;
+	<div>${obj.title}</div>`;
 }
 
 function FactoryMedia(media) {
