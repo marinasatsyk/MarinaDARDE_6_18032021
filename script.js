@@ -155,8 +155,8 @@ const withDataCallBack = function(result) {
                     <div class="tagline">${p.tagline}</div>
                     <div class="price">
                         ${p.price}€
-                        
                         <span aria-hidden="true">/</span>
+                        <span class="hidden">par</span>
                         jour
                     </div>
                     <div class="tags">${showTags(p.tags)}</div>

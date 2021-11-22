@@ -137,11 +137,11 @@ function CreatePhotographerHTML(photographer, data) {
         if (media.hasOwnProperty("video")) {
             let file = rep + "/" + media.video.replace("-", "")
             MAP_Media.set(media.video.replace("-", ""), media);
-            return `<div class="video media_content"><video src="${file}"  class="video_content allmedia" controls aria="${media.title}"></video></div>`;
+            return `<div class="video media_content"><video src="${file}"  class="video_content allmedia" controls alt="${media.title}"></video></div>`;
         } else if (media.hasOwnProperty("image")) {
             let file = rep + "/" + media.image.replace("-", "")
             MAP_Media.set(media.image.replace("-", ""), media);
-            return `<div class="img media_content"><img src="${file}"  class="img_content allmedia" aria="${media.title}"></div>`;
+            return `<div class="img media_content"><img src="${file}"  class="img_content allmedia" alt="${media.title}"></div>`;
         }
 
 
@@ -172,9 +172,13 @@ function CreatePhotographerHTML(photographer, data) {
 
         `<div class="wrapper_likes">
             <div class="num_like">${showRank()}</div>
-            <i class="fas fa-heart" role="img" aria="likes" aria-hidden="false"></i></div>
-            <div class="price page_perso">${photographer.price}€/jour
-        </div>`
+            <i class="fas fa-heart" role="img" alt="likes" aria-hidden="false"></i></div>
+            <div class="price page_perso">
+                        ${photographer.price}€
+                        <span aria-hidden="true">/</span>
+                        <span class="hidden">par</span>
+                        jour
+            </div>`
 
     /*creation media conent */
 
@@ -192,7 +196,13 @@ function CreatePhotographerHTML(photographer, data) {
                      <div class="text__description">
                          <h3>${media.title}</h3>
                      </div>
-                     <span class="likes">${+media.likes}<i class="fas fa-heart iterator"  role="img" aria="likes" aria-hidden="false"></i></span>
+                     <span class="likes">${+media.likes}
+                     <span class="hidden">like</span>
+                     
+                     
+                     <span class="iterator"><i class="fas fa-heart"  role="img" alt="likes" ></i></span>
+                     
+                     </span>
              </div>
         </article>`
     })
