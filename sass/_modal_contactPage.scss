@@ -136,6 +136,15 @@ input.btn-submit {
     cursor: pointer;
 }
 
+.hidden {
+    height: 1px;
+    left: 0;
+    overflow: hidden;
+    position: absolute;
+    top: -10000px;
+    width: 1px;
+}
+
 @keyframes modalopen {
     from {
         opacity: 0;

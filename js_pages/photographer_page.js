@@ -59,7 +59,7 @@ menu_sort.addEventListener("click", () => {
 
 function showTags(tags) {
     let result = "";
-    for (let t of tags) { result += `<span class="tag tag_perso">#${t}</span>`; }
+    for (let t of tags) { result += `<span class="tag tag_perso"><span aria-hidden="true">#</span>${t}</span>`; }
     return result;
 }
 
@@ -117,7 +117,7 @@ function CreatePhotographerHTML(photographer, data) {
             <div class="form_modal contact">Contactez-moi</div>
 
             <div class="parent_img parent_img_perso">
-                <img src=${photographerGetPhoto(photographer)} class="portrait img" alt="">
+                <img src=${photographerGetPhoto(photographer)} class="portrait img" alt="${photographer.name}">
             </div>
         
     </section>`
@@ -170,11 +170,11 @@ function CreatePhotographerHTML(photographer, data) {
 
     document.querySelector(".rating_price_likes").innerHTML =
 
-        `<div class="wrapper_likes"><div class="num_like">${showRank()}</div>
-     <i class="fas fa-heart"></i></div>
-     <div class="price page_perso">${photographer.price}&#8364/jour</div>
-     `
-
+        `<div class="wrapper_likes">
+            <div class="num_like">${showRank()}</div>
+            <i class="fas fa-heart" role="img" aria="likes" aria-hidden="false"></i></div>
+            <div class="price page_perso">${photographer.price}€/jour
+        </div>`
 
     /*creation media conent */
 
@@ -192,7 +192,7 @@ function CreatePhotographerHTML(photographer, data) {
                      <div class="text__description">
                          <h3>${media.title}</h3>
                      </div>
-                     <span class="likes">${+media.likes}<i class="fas fa-heart iterator"></i></span>
+                     <span class="likes">${+media.likes}<i class="fas fa-heart iterator"  role="img" aria="likes" aria-hidden="false"></i></span>
              </div>
         </article>`
     })
@@ -214,7 +214,7 @@ function CreatePhotographerHTML(photographer, data) {
 
 
 
-    /*Pages modal contact, photo one by one*/
+    /*PAGE MODAL CONTACT, photo one by one*/
     const modalBtn = document.querySelector(".contact");
     const modalbg = document.querySelector(".bground");
     const submitBtn = document.querySelector(".btn-submit")
@@ -228,32 +228,66 @@ function CreatePhotographerHTML(photographer, data) {
 
     function launchModal() {
         modalbg.style.display = "block";
+        modalbg.attributes[1].value = "false";
+        console.dir(modalbg)
         document.querySelector("body").classList.add("_lock");
         document.querySelector(".content h2 > .nom_photographer").textContent = photographer.name
     }
 
     //disable error warning
-    formData.forEach(elem => elem.addEventListener("click", back = () => {
+    formData.forEach(elem => elem.addEventListener("click", () => {
         elem.dataset.errorVisible = "false";
     }));
+    formData.forEach(elem => elem.addEventListener("keydown", () => {
 
-    inputIn.forEach(elem => elem.addEventListener("click", back = () => {
+        elem.dataset.errorVisible = "false";
+
+
+    }));
+
+    inputIn.forEach(elem => elem.addEventListener("click", () => {
         elem.style.background = '#fff';
+        if (elem.id == 'firstName') {
+            elem.attributes[7].value = "false";
+        } else if (elem.id == 'lastName') {
+            elem.attributes[7].value = "false";
+        } else if (elem.id == 'email') {
+            elem.attributes[6].value = "false";
+        }
+    }));
+
+    inputIn.forEach(elem => elem.addEventListener("keydown", () => {
+        elem.style.background = '#fff';
+        if (elem.id == 'firstName') {
+
+            elem.attributes[7].value = "false";
+
+
+        } else if (elem.id == 'lastName') {
+
+            elem.attributes[7].value = "false";
+        } else if (elem.id == 'email') {
+
+            elem.attributes[6].value = "false";
+
+        }
     }));
 
 
+
+
+    //CLOSE MODAL form
     document.querySelector('.close').addEventListener("click", () => {
         close(modalbg)
     })
 
-    function close(elem) {
-        if (elem.style.display == "block") {
-            elem.style.display = "none";
-            document.querySelector("body").classList.remove("_lock");
-        }
-    }
+
+    closetWithKeyboard(modalbg, 1)
 
 
+
+
+    /*verification content modal form contact photographer */
     submitBtn.onclick = (event) => {
         event.preventDefault();
 
@@ -267,33 +301,31 @@ function CreatePhotographerHTML(photographer, data) {
         let emailChecked = true;
 
 
+
+
         inputIn.forEach(elem => {
-            console.dir(elem.value)
+            console.dir(elem)
 
             if (elem.id == 'firstName' && elem.value.length < elem.attributes.minlength.value) {
                 elem.style.background = '#ffbbbb';
                 fisrtChecked = false;
                 formData[0].dataset.errorVisible = "true";
+                elem.attributes[7].value = "true";
+                console.dir(elem);
 
             } else if (elem.id == 'lastName' && elem.value.length < elem.attributes.minlength.value) {
                 elem.style.background = '#ffbbbb';
                 lastChecked = false;
                 formData[1].dataset.errorVisible = "true";
+                elem.attributes[7].value = "true";
             } else if (elem.id == 'email' && validateEmail(elem.value) == false) {
                 elem.style.background = '#ffbbbb';
                 emailChecked = false;
                 formData[2].dataset.errorVisible = "true";
+                elem.attributes[6].value = "true";
+                elem.style.background = '#ffbbbb';
             }
 
-            // if (elem.id == 'firstName' && fisrtChecked == true) {
-            //     result[elem.id] += elem.value;
-
-            // } else if (elem.id == 'lastName' && lastChecked == true) {
-            //     result[elem.id] += elem.value;
-            // } else if (elem.id == 'email' && emailChecked == true) {
-            //     result[elem.id] += elem.value;
-
-            // }
 
         })
 
@@ -328,7 +360,7 @@ function CreatePhotographerHTML(photographer, data) {
 
 
 
-/*verification content modal form contact photographer */
+
 
 
 
@@ -339,7 +371,7 @@ function FactoryImage(media) {
     let folders = media.attributes[0].value.split("/");
     let key = folders[folders.length - 1];
     let obj = MAP_Media.get(key);
-    return `<img src=${media.attributes[0].value} alt="">
+    return `<img src=${media.attributes[0].value} alt="${obj.title}">
     <div>${obj.title}</div>`;
 }
 
@@ -347,7 +379,7 @@ function FactoryVideo(media) {
     let folders = media.attributes[0].value.split("/");
     let key = folders[folders.length - 1];
     let obj = MAP_Media.get(key);
-    return `<video src=${media.attributes[0].value} alt="" controls>
+    return `<video src=${media.attributes[0].value} alt="${obj.title}" controls>
     <div>${obj.title}</div>`;
 }
 
@@ -360,7 +392,7 @@ function FactoryMedia(media) {
     }
 }
 
-//function for show big media after click on
+//function for SHOW BIG MEDIAS after click on
 function showSlidePhoto() {
     let allMedia = document.querySelectorAll(".allmedia");
     let placePhoto = document.querySelector(".modal-bodyPhotoGallery");
@@ -380,9 +412,14 @@ function showSlidePhoto() {
         let media = allMedia[i];
 
         media.addEventListener("click", () => {
-            console.log(media);
+            // console.log(media);
 
             wrapShowPhoto.style.display = "flex";
+            // console.dir(wrapShowPhoto.attributes[1].value);
+            wrapShowPhoto.attributes[1].value = "false";
+            // console.dir(wrapShowPhoto.attributes[1].value);
+
+
             document.querySelector("body").classList.add("_lock");
             placePhoto.innerHTML = FactoryMedia(media);
 
@@ -390,6 +427,7 @@ function showSlidePhoto() {
                 console.log("click L");
                 media = media.before ? media.before : media;
                 placePhoto.innerHTML = FactoryMedia(media);
+
             })
 
             document.querySelector(".slideRight").addEventListener("click", () => {
@@ -397,30 +435,57 @@ function showSlidePhoto() {
                 media = media.after ? media.after : media;
                 placePhoto.innerHTML = FactoryMedia(media);
             })
+
+            document.body.addEventListener('keydown', function(event) {
+                console.log(event);
+
+                //events with keyboard
+                if (event.key === "ArrowLeft") {
+                    console.log("click L");
+                    media = media.before ? media.before : media;
+                    placePhoto.innerHTML = FactoryMedia(media);
+                }
+
+                if (event.key === "ArrowRight") {
+                    console.log("click R");
+                    media = media.after ? media.after : media;
+                    placePhoto.innerHTML = FactoryMedia(media);
+                }
+
+            });
+
         })
     }
 
     document.querySelector('.bgPhoto .close').addEventListener("click", () => {
-        if (wrapShowPhoto.style.display !== "none") {
-            wrapShowPhoto.style.display = "none";
-            document.querySelector("body").classList.remove("_lock");
-        }
+        close(wrapShowPhoto);
     })
 
-
-
-
-
-
+    closetWithKeyboard(wrapShowPhoto, 1)
 
 }
 
 
-let a = [1, 37, 5, 45, 80, 2];
-console.log(a);
-console.log(a.sort(function(a, b) {
-    return a - b;
-}));
+//GENERIC FUNCTIONS  FOR CLOSE MODAL FORMS
+function close(elem) {
+    if (elem.style.display !== "none") {
+        elem.style.display = "none";
+        document.querySelector("body").classList.remove("_lock");
+    }
+}
+/**
+ * 
+ * @param {DOMElement} elemForClose 
+ * @param {number} numberOfAttribute 
+ */
+function closetWithKeyboard(elemForClose, numberOfAttribute) {
+    document.body.addEventListener('keydown', function(event) {
+        console.log(event);
 
-a.sort();
-console.log(a);
+        //when modal page is opened && tha attribute aria-hidden  == false
+        if (elemForClose.attributes[numberOfAttribute].value == "false" && event.key === "Escape") {
+            close(elemForClose);
+            elemForClose.attributes[numberOfAttribute].value == "true";
+        }
+    });
+}

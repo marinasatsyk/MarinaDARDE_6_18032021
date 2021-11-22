@@ -11,9 +11,9 @@
 </head>
 
 <body>
-    <header class="header">
-        <a href="../index.html"><svg width="200" height="50" viewBox="0 0 200 50" fill="none" class="logo"
-                xmlns="http://www.w3.org/2000/svg">
+    <header class="header" role="banner">
+        <a href="../index.html">
+            <svg width="200" height="50" viewBox="0 0 200 50" fill="none" class="logo" aria-label="Fisheye Home page" xmlns="http://www.w3.org/2000/svg">
                 <path d="M24.7206 0.911377V6.51034H6.31164V17.578H21.4333V22.9166H6.31164V39.1926H0V0.911377H24.7206Z"
                     fill="#911C1C" />
                 <path
@@ -34,7 +34,8 @@
                 <path
                     d="M135.437 7.94263H129.257L125.707 4.03638H114.004L110.454 7.94263H104.273C102.17 7.94263 100.329 9.63533 100.329 11.8489V35.026C100.329 37.1093 102.038 38.9322 104.273 38.9322H135.437C137.541 38.9322 139.382 37.2395 139.382 35.026V11.7187C139.382 9.63533 137.672 7.94263 135.437 7.94263ZM135.437 34.8957H104.405V11.7187H112.294L115.845 7.81242H124.129L127.548 11.7187H135.437V34.8957ZM119.921 13.6718C114.53 13.6718 110.191 17.9687 110.191 23.3072C110.191 28.6457 114.53 32.9426 119.921 32.9426C125.312 32.9426 129.651 28.6457 129.651 23.3072C129.651 17.9687 125.312 13.6718 119.921 13.6718ZM119.921 29.1666C116.765 29.1666 114.135 26.5624 114.135 23.4374C114.135 20.3124 116.765 17.7083 119.921 17.7083C123.077 17.7083 125.707 20.3124 125.707 23.4374C125.707 26.5624 123.077 29.1666 119.921 29.1666Z"
                     fill="#911C1C" />
-            </svg></a>
+            </svg>
+        </a>
 
     </header>
 
@@ -67,37 +68,39 @@
         </section>
 
 
-        <div class="bground">
+        <div class="bground" aria-hidden="true">
             <div class="content">
                 <div>
                     <h2>Contactez-moi <br><span class="nom_photographer"></span></h2>
-                    <span class="close"></span>
+                    <span class="close" aria-label="fermer le formulaire"></span>
                 </div>
                 <div class="modal-body">
 
 
 
-                    <form name="reserve" action="index.html" method="get" onsubmit="return validate();">
-                        <div class="formData" data-error="Veuillez entrer 2 caractères ou plus pour le champ du prenom" data-error-visible="false">
-                            <label for="first">Prénom</label><br>
-                            <input class="text-control" type="text" id="firstName" name="first" minlength="2" required /><br>
+                    <form name="reserve" action="index.html" method="post" onsubmit="return validate();">
+                        <fieldset style="border: none;">
+                            <div class="formData" data-error="Veuillez entrer 2 caractères ou plus pour le champ du prenom" data-error-visible="false">
+                                <label for="firstName">Prénom</label><br>
+                                <input class="text-control" type="text" id="firstName" name="firstName" minlength="2" required aria-required=true aria-invalid="false" /><br>
+                                <span class="hidden">Veuillez entrer 2 caractères ou plus pour le champ du prenom</span>
 
-                        </div>
-                        <div class="formData" data-error="Veuillez entrer 2 caractères ou plus pour le champ du nom">
-                            <label for="last">Nom</label><br>
-                            <input class="text-control" type="text" id="lastName" name="last" minlength="2" required /><br>
-                        </div>
-                        <div class="formData" data-error="Veuillez entrer email correct">
-                            <label for="email">E-mail</label><br>
-                            <input class="text-control" type="email" id="email" name="email" required /><br>
-                        </div>
-                        <div class="formData">
-                            <label for="message">Votre message</label><br>
-                            <textarea class="text-control message" name="message" id="message" rows="10" maxlength="300"></textarea><br>
+                            </div>
+                            <div class="formData" data-error="Veuillez entrer 2 caractères ou plus pour le champ du nom">
+                                <label for="lastName">Nom</label><br>
+                                <input class="text-control" type="text" id="lastName" name="lastName" minlength="2" required aria-required=true aria-invalid="false" /><br>
+                            </div>
+                            <div class="formData" data-error="Veuillez entrer email correct">
+                                <label for="email">E-mail</label><br>
+                                <input class="text-control" type="email" id="email" name="email" required aria-required=true aria-invalid="false" /><br>
+                            </div>
+                            <div class="formData">
+                                <label for="message">Votre message</label><br>
+                                <textarea class="text-control message" name="message" id="message" rows="10" maxlength="300"></textarea><br>
 
-                        </div>
-
-                        <input class="btn-submit button" type="submit" value="Envoyer" />
+                            </div>
+                        </fieldset>
+                        <input class="btn-submit button" type="submit" value="Envoyer" aria-label="envoyer les données" />
                     </form>
 
 
@@ -108,7 +111,7 @@
         </div>
 
         <!-- insertion of photo gallery -->
-        <div class="bgPhoto">
+        <div class="bgPhoto" aria-hidden="true">
             <div class="content contentPhotoGallery">
                 <span class="close"></span>
                 <div class="slider">
