@@ -31,6 +31,10 @@ header {
     }
 }
 
+.liked {
+    color: darken(#901C1C, 20%);
+}
+
 section.photographe_perso {
     display: grid;
     grid-template-areas: "a b c";
@@ -161,6 +165,7 @@ article.media {
             top: 0;
             left: 0;
             margin-bottom: 10px;
+            cursor: pointer;
         }
     }
     .description {
