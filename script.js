@@ -1,35 +1,7 @@
-/* function is mobile */
+/* function is mobile is in doc functions commun */
 
-function showScreen() {
-    const isMobile = {
-        Android: function() {
-            return navigator.userAgent.match(/Android/i);
-        },
-        BlackBerry: function() {
-            return navigator.userAgent.match(/BlackBerry/i);
-        },
-        iOS: function() {
-            return navigator.userAgent.match(/iPhone|iPad|iPod/i);
-        },
-        Opera: function() {
-            return navigator.userAgent.match(/Opera Mini/i);
-        },
-        Windows: function() {
-            return navigator.userAgent.match(/IEMobile/i) || navigator.userAgent.match(/WPDesktop/i);
-        },
-        any: function() {
-            return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
-        }
-    };
 
-    if (isMobile.any()) {
-        document.body.classList.add("_touch");
-    } else {
-        document.body.classList.add("_pc");
-    }
-}
 
-showScreen();
 
 
 
@@ -87,7 +59,7 @@ const withDataCallBack = function(result) {
 
         for (let media of result.media) {
             let l_photographer = photographersMap.get(media.photographerId);
-            console.log(l_photographer);
+
             l_photographer.media.push(media); /* sort medias and insert to media field**/
         }
 
@@ -108,7 +80,11 @@ const withDataCallBack = function(result) {
         }
         for (let key of tagsSet) {
             let tagUppercase = key.capitalize();
-            clone.querySelector(".nav_header__list").innerHTML += `<li class="tag_main">#${tagUppercase}</li>`;
+            clone.querySelector(".nav_header__list").innerHTML +=
+                `<li class="tag_main">
+                        <span aria-hidden="true">#</span>
+                        ${tagUppercase}
+                </li>`;
 
         }
         // parent elem in which to put the cloned elem
@@ -124,7 +100,7 @@ const withDataCallBack = function(result) {
 
         function showTags(tags) {
             let result = "";
-            for (let t of tags) { result += `<span class="tag">#${t}</span>`; }
+            for (let t of tags) { result += `<span class="tag"><span aria-hidden="true">#</span>${t}</span>`; }
             return result;
         }
 
@@ -143,18 +119,29 @@ const withDataCallBack = function(result) {
         photographersMap.forEach(p => {
             console.log(p);
 
-            clonePhotographer.querySelector(".photographers").innerHTML += `<section class="photographe" id="${p.id}">
-                <a href="./html_pages/phographer_page.html?photographe=${p.id}">
-                    <div class="parent_img">
-                        <img src=${photographerGetPhoto(p)} class="portrait img" alt="">
+            clonePhotographer.querySelector(".photographers").innerHTML +=
+                `<section class="photographe" id="${p.id}" aria-label="${p.name}">
+                    <a href="./html_pages/phographer_page.html?photographe=${p.id}" id="lien_photographer">
+                        <div class="parent_img">
+                            <img src=${photographerGetPhoto(p)} class="portrait img" alt="">
+                        </div>
+                        <h2 class="name">${p.name}</h2>
+                        <span class="hidden">lien vers la page de photographe</span>
+                    </a>  
+                        
+                    <div class="text_for_phographer" aria-labelledby="${p.id}">
+                        <div class="city country">${p.city}, ${p.country}</div>
+                        <div class="tagline">${p.tagline}</div>
+                        <div class="price">
+                            ${p.price}€
+                            <span aria-hidden="true">/</span>
+                            <span class="hidden">par</span>
+                            jour
+                        </div>
+                        <div class="tags">${showTags(p.tags)}</div>
                     </div>
-                    <h2 class="name">${p.name}</h2>
-                    <div class="city country">${p.city}, ${p.country}</div>
-                    <div class="tagline">${p.tagline}</div>
-                    <div class="price">${p.price}&#8364/jour</div>
-                    <div class="tags">${showTags(p.tags)}</div>
-                </a>
-            </section>`;
+
+                </section>`;
         });
 
         // parent elem in which to put the cloned elem
@@ -222,3 +209,4 @@ const withDataCallBack = function(result) {
     }
     // call my get-file function with the callback previously declared
 GetFile("./data.json", withDataCallBack);
+// showScreen();

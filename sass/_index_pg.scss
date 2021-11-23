@@ -9,6 +9,17 @@
     }
 }
 
+.hidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
 //header
 header {
     display: flex;
@@ -70,6 +81,7 @@ header {
 
 .nav_header__list {
     display: flex;
+    flex-wrap: wrap;
     li {
         @include tag;
         cursor: pointer;
@@ -104,14 +116,14 @@ main {
     .photographe {
         display: inline-block;
         width: 100%;
-        a {
+        a,
+        .text_for_phographer {
             display: flex;
             flex-direction: column;
             width: 100%;
             min-width: fit-content;
             justify-content: center;
             align-items: center;
-            margin-bottom: 40px;
         }
         .parent_img {
             border-radius: 50%;
@@ -136,6 +148,9 @@ main {
             font-weight: 400;
             color: $font_color_primary;
             margin-bottom: 15px;
+        }
+        .text_for_phographer {
+            margin-bottom: 40px;
         }
         .city {
             font-size: 1.2vh;

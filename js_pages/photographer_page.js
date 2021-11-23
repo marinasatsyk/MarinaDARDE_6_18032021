@@ -47,7 +47,7 @@ function withDataCallBack(data) {
 
 function showTags(tags) {
     let result = "";
-    for (let t of tags) { result += `<span class="tag tag_perso">#${t}</span>`; }
+    for (let t of tags) { result += `<span class="tag tag_perso"><span aria-hidden="true">#</span>${t}</span>`; }
     return result;
 }
 
@@ -98,7 +98,7 @@ function CreatePhotographerHTML(photographer, data) {
 			<div class="form_modal contact">Contactez-moi</div>
 
 			<div class="parent_img parent_img_perso">
-				<img src=${photographerGetPhoto(photographer)} class="portrait img" alt="">
+				<img src=${photographerGetPhoto(photographer)} class="portrait img" alt="${photographer.name}">
 			</div>
 		
 	</section>`
@@ -118,11 +118,11 @@ function CreatePhotographerHTML(photographer, data) {
         if (media.hasOwnProperty("video")) {
             let file = rep + "/" + media.video.replace("-", "")
             MAP_Media.set(media.video.replace("-", ""), media);
-            return `<div class="video media_content"><video src="${file}"  class="video_content allmedia" controls aria="${media.title}"></video></div>`;
+            return `<div class="video media_content"><video src="${file}"  class="video_content allmedia" controls alt="${media.title}"></video></div>`;
         } else if (media.hasOwnProperty("image")) {
             let file = rep + "/" + media.image.replace("-", "")
             MAP_Media.set(media.image.replace("-", ""), media);
-            return `<div class="img media_content"><img src="${file}"  class="img_content allmedia" aria="${media.title}"></div>`;
+            return `<div class="img media_content"><img src="${file}"  class="img_content allmedia" alt="${media.title}"></div>`;
         }
 
 
@@ -193,10 +193,16 @@ function CreatePhotographerHTML(photographer, data) {
 
         `<div class="wrapper_likes">
 			<div class="num_like">${showRank()}</div>
-			<i class="fas fa-heart"></i>
+			<span class="hidden">likes</span>
+            <i class="fas fa-heart"></i>
 		</div>
-		<div class="price page_perso">${photographer.price}€/jour</div>
-	`
+		<div class="price page_perso">
+                ${photographer.price}€
+                <span aria-hidden="true">/</span>
+                <span class="hidden">par</span>
+                jour
+        </div>`
+
 
 
     /*creation media conent */
@@ -243,7 +249,11 @@ function CreatePhotographerHTML(photographer, data) {
 						<div class="text__description">
 							<h3>${media.title}</h3>
 						</div>
-						<span class="likes">${+media.likes}<i class="fas fa-heart iterator${l_classActive}" id="media_${media_id}"></i></span>
+						<span class="likes">
+                            ${+media.likes}
+                            <span class="hidden">likes</span>
+                            <i class="fas fa-heart iterator${l_classActive}" id="media_${media_id}"></i>
+                        </span>
 				</div>
 			</article>`
 
@@ -297,7 +307,7 @@ function CreatePhotographerHTML(photographer, data) {
 
     /*   menu sort media**/
 
-    //animation medu sort media
+    //animation menu sort media
     let arrow_sort = document.querySelector(".change_status_display");
     arrow_sort.addEventListener("click", (event) => {
         let menu_sort = document.querySelector(".wrapper_sort");
@@ -329,7 +339,7 @@ function CreatePhotographerHTML(photographer, data) {
 
 
 
-    /*Pages modal contact, photo one by one*/
+    /*PAGE MODAL CONTACT, photo one by one*/
     const modalBtn = document.querySelector(".contact");
     const modalbg = document.querySelector(".bground");
     const submitBtn = document.querySelector(".btn-submit")
@@ -343,6 +353,7 @@ function CreatePhotographerHTML(photographer, data) {
 
     function launchModal() {
         modalbg.style.display = "block";
+        modalbg.attributes[1].value = "false";
         document.querySelector("body").classList.add("_lock");
         document.querySelector(".content h2 > .nom_photographer").textContent = photographer.name
     }
@@ -351,22 +362,42 @@ function CreatePhotographerHTML(photographer, data) {
     formData.forEach(elem => elem.addEventListener("click", () => {
         elem.dataset.errorVisible = "false";
     }));
+    formData.forEach(elem => elem.addEventListener("keydown", () => {
 
-    inputIn.forEach(elem => elem.addEventListener("click", () => {
-        elem.style.background = '#fff';
+        elem.dataset.errorVisible = "false";
     }));
 
 
+    inputIn.forEach(elem => elem.addEventListener("click", () => {
+        elem.style.background = '#fff';
+        if (elem.id == 'firstName') {
+            elem.attributes[7].value = "false";
+        } else if (elem.id == 'lastName') {
+            elem.attributes[7].value = "false";
+        } else if (elem.id == 'email') {
+            elem.attributes[6].value = "false";
+        }
+    }));
+
+    inputIn.forEach(elem => elem.addEventListener("keydown", () => {
+        elem.style.background = '#fff';
+        if (elem.id == 'firstName') {
+            elem.attributes[7].value = "false";
+        } else if (elem.id == 'lastName') {
+            elem.attributes[7].value = "false";
+        } else if (elem.id == 'email') {
+            elem.attributes[6].value = "false";
+        }
+    }));
+
+
+    //CLOSE MODAL form
     document.querySelector('.close').addEventListener("click", () => {
         close(modalbg)
     })
 
-    function close(elem) {
-        if (elem.style.display == "block") {
-            elem.style.display = "none";
-            document.querySelector("body").classList.remove("_lock");
-        }
-    }
+    closetWithKeyboard(modalbg, 1)
+
 
 
     submitBtn.onclick = (event) => {
@@ -383,32 +414,24 @@ function CreatePhotographerHTML(photographer, data) {
 
 
         inputIn.forEach(elem => {
-            console.dir(elem.value)
 
             if (elem.id == 'firstName' && elem.value.length < elem.attributes.minlength.value) {
                 elem.style.background = '#ffbbbb';
                 fisrtChecked = false;
                 formData[0].dataset.errorVisible = "true";
+                elem.attributes[7].value = "true";
 
             } else if (elem.id == 'lastName' && elem.value.length < elem.attributes.minlength.value) {
                 elem.style.background = '#ffbbbb';
                 lastChecked = false;
                 formData[1].dataset.errorVisible = "true";
+                elem.attributes[7].value = "true";
             } else if (elem.id == 'email' && validateEmail(elem.value) == false) {
                 elem.style.background = '#ffbbbb';
                 emailChecked = false;
                 formData[2].dataset.errorVisible = "true";
+                elem.attributes[6].value = "true";
             }
-
-            // if (elem.id == 'firstName' && fisrtChecked == true) {
-            //	 result[elem.id] += elem.value;
-
-            // } else if (elem.id == 'lastName' && lastChecked == true) {
-            //	 result[elem.id] += elem.value;
-            // } else if (elem.id == 'email' && emailChecked == true) {
-            //	 result[elem.id] += elem.value;
-
-            // }
 
         })
 
@@ -454,7 +477,7 @@ function FactoryImage(media) {
     let folders = media.attributes[0].value.split("/");
     let key = folders[folders.length - 1];
     let obj = MAP_Media.get(key);
-    return `<img src=${media.attributes[0].value} alt="">
+    return `<img src=${media.attributes[0].value} alt="${obj.title}">
 	<div>${obj.title}</div>`;
 }
 
@@ -462,7 +485,7 @@ function FactoryVideo(media) {
     let folders = media.attributes[0].value.split("/");
     let key = folders[folders.length - 1];
     let obj = MAP_Media.get(key);
-    return `<video src=${media.attributes[0].value} alt="" controls>
+    return `<video src=${media.attributes[0].value} alt="${obj.title}" controls>
 	<div>${obj.title}</div>`;
 }
 
@@ -475,7 +498,7 @@ function FactoryMedia(media) {
     }
 }
 
-//function for show big media after click on
+//function for SHOW BIG MEDIAS after click on
 function showSlidePhoto() {
     let allMedia = document.querySelectorAll(".allmedia");
     let placePhoto = document.querySelector(".modal-bodyPhotoGallery");
@@ -498,6 +521,7 @@ function showSlidePhoto() {
             console.log(media);
 
             wrapShowPhoto.style.display = "flex";
+            wrapShowPhoto.attributes[1].value = "false";
             document.querySelector("body").classList.add("_lock");
             placePhoto.innerHTML = FactoryMedia(media);
 
@@ -513,29 +537,56 @@ function showSlidePhoto() {
                 placePhoto.innerHTML = FactoryMedia(media);
             })
         })
+
+        document.body.addEventListener('keydown', function(event) {
+            console.log(event);
+
+            //events with keyboard
+            if (event.key === "ArrowLeft") {
+                console.log("click L");
+                media = media.before ? media.before : media;
+                placePhoto.innerHTML = FactoryMedia(media);
+            }
+
+            if (event.key === "ArrowRight") {
+                console.log("click R");
+                media = media.after ? media.after : media;
+                placePhoto.innerHTML = FactoryMedia(media);
+            }
+
+        });
+
     }
 
     document.querySelector('.bgPhoto .close').addEventListener("click", () => {
-        if (wrapShowPhoto.style.display !== "none") {
-            wrapShowPhoto.style.display = "none";
-            document.querySelector("body").classList.remove("_lock");
-        }
+        close(wrapShowPhoto);
     })
 
-
-
-
-
-
+    closetWithKeyboard(wrapShowPhoto, 1)
 
 }
 
 
-let a = [1, 37, 5, 45, 80, 2];
-console.log(a);
-console.log(a.sort(function(a, b) {
-    return a - b;
-}));
+//GENERIC FUNCTIONS  FOR CLOSE MODAL FORMS
+function close(elem) {
+    if (elem.style.display !== "none") {
+        elem.style.display = "none";
+        document.querySelector("body").classList.remove("_lock");
+    }
+}
+/**
+ * 
+ * @param {DOMElement} elemForClose 
+ * @param {number} numberOfAttribute 
+ */
+function closetWithKeyboard(elemForClose, numberOfAttribute) {
+    document.body.addEventListener('keydown', function(event) {
+        console.log(event);
 
-a.sort();
-console.log(a);
+        //when modal page is opened && the attribute aria-hidden  == false
+        if (elemForClose.attributes[numberOfAttribute].value == "false" && event.key === "Escape") {
+            close(elemForClose);
+            elemForClose.attributes[numberOfAttribute].value == "true";
+        }
+    });
+}
