@@ -26,7 +26,7 @@ section.content_media {
     z-index: 10;
     position: absolute;
     left: 80px;
-    width: 200px;
+    width: 170px;
     height: 50px;
     border-radius: 5px;
     box-shadow: 3px 3px 3px rgb(165, 164, 164);
@@ -38,17 +38,35 @@ section.content_media {
         position: relative;
         margin: 0;
         padding: 0;
+        background: #901C1C;
     }
     li {
-        background: #901C1C;
         color: white;
         text-align: center;
         height: 50px;
         cursor: pointer;
+        padding: 0 10px;
+    }
+    li.sort_media_arrow {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
     }
     .fas {
         font-size: 20px;
         color: white;
+    }
+    li.top_line {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        &::before {
+            content: " ";
+            border-top: .5px solid #fff;
+            width: 100%;
+            margin-bottom: 5px;
+        }
     }
 }
 
