@@ -82,11 +82,14 @@ const withDataCallBack = function(result) {
             let tagUppercase = key.capitalize();
             clone.querySelector(".nav_header__list").innerHTML +=
                 `<li class="tag_main">
-                        <span aria-hidden="true">#</span>
-                        ${tagUppercase}
+                <span aria-hidden="true">#</span>
+                 <span class="tag_main_T">${tagUppercase}</span>
                 </li>`;
 
         }
+
+        // <span aria-hidden="true">#</span>
+
         // parent elem in which to put the cloned elem
         document.querySelector('.nav_header_contener').appendChild(clone);
 
@@ -152,21 +155,26 @@ const withDataCallBack = function(result) {
 
         //function for remove first symbol# to string tag and make it in lowercase
         function parseTag(t) {
-            return (t.slice(1)).toLowerCase();
+            return (t.trim()).toLowerCase();
         }
+
 
         function updateTags() {
             photographersMap.forEach(p => {
                 let doc = document.getElementById(p.id);
                 let found = false;
+
                 for (let tag of Tags_Active) {
                     found = false;
+
                     for (let ptag of p.tags) {
+
                         if (ptag === tag) {
                             found = true;
                             break;
                         }
                     }
+
                     if (!found) {
                         doc.style.display = "none";
                         break;
@@ -174,17 +182,16 @@ const withDataCallBack = function(result) {
                 }
 
                 if (found || Tags_Active.length === 0) {
-                    doc.style.display = "flex";
+                    console.log(doc);
+                    doc.style.display = "inline-block";
                 }
 
             });
         }
 
 
-        document.querySelectorAll(".tag_main").forEach((elem) => {
-
+        document.querySelectorAll(".tag_main_T").forEach((elem) => {
             elem.addEventListener("click", () => {
-
                 elem.classList.toggle("tag_activ");
 
                 if (elem.classList.contains("tag_activ")) {
@@ -195,18 +202,9 @@ const withDataCallBack = function(result) {
                         Tags_Active.splice(i, 1);
                     }
                 }
-
                 updateTags();
-
             })
         })
-
-
-        //
-
-
-
     }
     // call my get-file function with the callback previously declared
 GetFile("./data.json", withDataCallBack);
-// showScreen();

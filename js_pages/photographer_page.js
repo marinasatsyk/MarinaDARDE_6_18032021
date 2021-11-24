@@ -62,7 +62,7 @@ function photographerGetPhoto(photographer) {
 }
 
 
-showScreen(); //func is in file functions commun
+
 
 
 /*function draw media_content on the page of the photogrpher */
