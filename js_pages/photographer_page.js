@@ -79,19 +79,19 @@ function CreatePhotographerHTML(photographer, data) {
         }
     }
 
-    console.log(photographersMap);
+
     //information on the header of page 
     document.querySelector(".photographer_info").innerHTML =
-        `<section class="photographe photographe_perso" id="${photographer.id}">
+        `<section class="photographe photographe_perso" id="${photographer.id}" >
 			<span class="wraper_info_perso">
-			<h2 class="name name_perso">${photographer.name}</h2>
+			<h2 class="name name_perso" tabindex="0">${photographer.name}</h2>
 			
 			<div class="citi_tagline_perso">
-				<div class="city country page_perso">${photographer.city}, ${photographer.country}</div>
-				<div class="tagline page_perso">${photographer.tagline}</div>
+				<div class="city country page_perso" tabindex="0">${photographer.city}, ${photographer.country}</div>
+				<div class="tagline page_perso" tabindex="0">${photographer.tagline}</div>
 			</div>	
 
-			<div class="tags tags_perso">${showTags(photographer.tags)}</div>
+			<div class="tags tags_perso" tabindex="0">${showTags(photographer.tags)}</div>
 			</span>		
 			
 		
@@ -111,7 +111,7 @@ function CreatePhotographerHTML(photographer, data) {
     //function for draw all media on the page
 
     function photographerGetMedia(media) {
-        // console.log(media);
+
 
         let rep = "../FishEye_Photos/Sample_Photos/" + photographer.name.split(" ")[0].replace("-", "_");
 
@@ -122,13 +122,13 @@ function CreatePhotographerHTML(photographer, data) {
         } else if (media.hasOwnProperty("image")) {
             let file = rep + "/" + media.image.replace("-", "")
             MAP_Media.set(media.image.replace("-", ""), media);
-            return `<div class="img media_content"><img src="${file}"  class="img_content allmedia" alt="${media.title}"></div>`;
+            return `<div class="img media_content" tabindex="0"><img src="${file}"  class="img_content allmedia" alt="${media.title}"></div>`;
         }
 
 
     }
 
-    console.log(MAP_Media);
+
 
 
 
@@ -171,13 +171,13 @@ function CreatePhotographerHTML(photographer, data) {
 
     }
 
-    console.log(Map_like); // map with sorted content 
+    // console.log(Map_like); // map with sorted content 
 
     //===============================================================
 
 
 
-    console.log(photographer);
+
 
     function showRank() {
 
@@ -192,11 +192,11 @@ function CreatePhotographerHTML(photographer, data) {
     document.querySelector(".rating_price_likes").innerHTML =
 
         `<div class="wrapper_likes">
-			<div class="num_like">${showRank()}</div>
-			<span class="hidden">likes</span>
+			<div class="num_like" tabindex="0">${showRank()}</div>
+			<span class="hidden" tabindex="0">likes</span>
             <i class="fas fa-heart"></i>
 		</div>
-		<div class="price page_perso">
+		<div class="price page_perso" tabindex="0">
                 ${photographer.price}€
                 <span aria-hidden="true">/</span>
                 <span class="hidden">par</span>
@@ -233,26 +233,26 @@ function CreatePhotographerHTML(photographer, data) {
 
         pRank.forEach(media => {
 
-            console.log(media);
+
             let media_id = media.id;
             let l_classActive = "";
             if (likes.indexOf("" + media_id) >= 0) {
                 l_classActive = " liked";
-                console.log("LIKE " + media_id);
+                // console.log("LIKE " + media_id);
             }
 
             document.querySelector(".wrapper_media").innerHTML +=
-                `<article class="media">
+                `<article class="media" tabindex="0">
 				${photographerGetMedia(media)} 
 									
-				<div class="description">
+				<div class="description" tabindex="0">
 						<div class="text__description">
-							<h3>${media.title}</h3>
+							<h3 title="titre de photo">${media.title}</h3>
 						</div>
 						<span class="likes">
                             ${+media.likes}
                             <span class="hidden">likes</span>
-                            <i class="fas fa-heart iterator${l_classActive}" id="media_${media_id}"></i>
+                            <i class="fas fa-heart iterator${l_classActive}" id="media_${media_id}" tabindex="0"></i>
                         </span>
 				</div>
 			</article>`
@@ -315,24 +315,24 @@ function CreatePhotographerHTML(photographer, data) {
         arrow_sort.classList.toggle("animation_arrow");
         event.preventDefault();
         event.stopPropagation();
-        // document.querySelector("ul.sort_media li::after").classList.toggle("underline");
+
     });
 
     document.querySelector(".like_sort").addEventListener("click", () => {
         rank.sort(function(a, b) { return a.likes > b.likes ? -1 : 1; });
-        console.log(rank);
+
         buildMedia(rank);
     });
 
     document.querySelector(".date_sort").addEventListener("click", () => {
         rank.sort(function(a, b) { return a.date > b.date ? -1 : 1; });
-        console.log(rank);
+
         buildMedia(rank);
     });
 
     document.querySelector(".text_sort").addEventListener("click", () => {
         rank.sort(function(a, b) { return a.title > b.title ? 1 : -1; });
-        console.log(rank);
+
         buildMedia(rank);
     });
 
@@ -518,7 +518,6 @@ function showSlidePhoto() {
         let media = allMedia[i];
 
         media.addEventListener("click", () => {
-            console.log(media);
 
             wrapShowPhoto.style.display = "flex";
             wrapShowPhoto.attributes[1].value = "false";
@@ -539,7 +538,7 @@ function showSlidePhoto() {
         })
 
         document.body.addEventListener('keydown', function(event) {
-            console.log(event);
+
 
             //events with keyboard
             if (event.key === "ArrowLeft") {
@@ -581,7 +580,6 @@ function close(elem) {
  */
 function closetWithKeyboard(elemForClose, numberOfAttribute) {
     document.body.addEventListener('keydown', function(event) {
-        console.log(event);
 
         //when modal page is opened && the attribute aria-hidden  == false
         if (elemForClose.attributes[numberOfAttribute].value == "false" && event.key === "Escape") {

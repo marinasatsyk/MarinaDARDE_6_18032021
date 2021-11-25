@@ -11,8 +11,7 @@ function GetFile(file, callback) {
     let ls = localStorage.getItem("database");
     if (ls) {
         ls = JSON.parse(ls);
-        console.log("from local storage");
-        console.log(ls);
+
         callback(ls);
     } else {
         fetch(file)
@@ -81,7 +80,7 @@ const withDataCallBack = function(result) {
         for (let key of tagsSet) {
             let tagUppercase = key.capitalize();
             clone.querySelector(".nav_header__list").innerHTML +=
-                `<li class="tag_main">
+                `<li class="tag_main" tabindex="0">
                 <span aria-hidden="true">#</span>
                  <span class="tag_main_T">${tagUppercase}</span>
                 </li>`;
@@ -103,7 +102,7 @@ const withDataCallBack = function(result) {
 
         function showTags(tags) {
             let result = "";
-            for (let t of tags) { result += `<span class="tag"><span aria-hidden="true">#</span>${t}</span>`; }
+            for (let t of tags) { result += `<span class="tag" ><span aria-hidden="true">#</span>${t}</span>`; }
             return result;
         }
 
@@ -120,7 +119,6 @@ const withDataCallBack = function(result) {
 
         /*  element to clone in the tmpl tag **/
         photographersMap.forEach(p => {
-            console.log(p);
 
             clonePhotographer.querySelector(".photographers").innerHTML +=
                 `<section class="photographe" id="${p.id}" aria-label="${p.name}">
@@ -132,7 +130,7 @@ const withDataCallBack = function(result) {
                         <span class="hidden">lien vers la page de photographe</span>
                     </a>  
                         
-                    <div class="text_for_phographer" aria-labelledby="${p.id}">
+                    <div class="text_for_phographer" aria-labelledby="${p.id}" tabindex="0">
                         <div class="city country">${p.city}, ${p.country}</div>
                         <div class="tagline">${p.tagline}</div>
                         <div class="price">
@@ -182,7 +180,7 @@ const withDataCallBack = function(result) {
                 }
 
                 if (found || Tags_Active.length === 0) {
-                    console.log(doc);
+
                     doc.style.display = "inline-block";
                 }
 
