@@ -1,16 +1,22 @@
 /** FACTORY METHOD*/
 
-class FactoryMedia {
-    constructor() {
+import { FactoryImage } from "./FactoryImage.js";
+import { FactoryVideo } from "./FactoryVideo.js";
 
+export class FactoryMedia {
+    static Create(data) {
+        if (data.hasOwnProperty("image")) {
+            return new FactoryImage(data);
+        } else if (data.hasOwnProperty("video")) {
+            return new FactoryVideo(data);
+        }
     }
-
-
-
-
 }
 
 
+
+
+/*
 function FactoryImage_(media) {
     let folders = media.attributes[0].value.split("/");
     let key = folders[folders.length - 1];
@@ -26,12 +32,4 @@ function FactoryVideo_(media) {
     return `<video src=${media.attributes[0].value} alt="${obj.title}" controls>
 	<div>${obj.title}</div>`;
 }
-
-function FactoryMedia_(media) {
-    switch (media.localName) {
-        case "video":
-            return FactoryVideo(media);
-        default:
-            return FactoryImage(media);
-    }
-}
+*/

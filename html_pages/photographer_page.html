@@ -43,7 +43,7 @@
         <section class="photographer_info"></section>
 
         <section class="content_media">
-            <!--tag for sort  media content-->
+            <!--sort media content-->
             <div class="menu_sortBy">
                 <h2>Trier par</h2>
                 <div class="wrapper_sort">
@@ -51,14 +51,9 @@
                         <li class="sort_media sort_media_arrow">
                             <span class="like_sort" tabindex="0">Popularité</span>
                             <i class="fas fa-angle-down change_status_display" tabindex="0"></i>
-
                         </li>
-
-                        <li class="sort_media date_sort sort_media_first  change_status_display top_line" tabindex="0">
-                            Date</li>
-
-                        <li class="sort_media text_sort sort_media_second  change_status_display top_line" tabindex="0">
-                            Titre</li>
+                        <li class="sort_media date_sort sort_media_first  change_status_display top_line">Date</li>
+                        <li class="sort_media text_sort sort_media_second  change_status_display top_line">Titre</li>
                     </ul>
 
                 </div>
@@ -73,7 +68,7 @@
         <div class="bground" aria-hidden="true">
             <div class="content">
                 <div>
-                    <h2>Contactez-moi <br><span class="nom_photographer"></span></h2>
+                    <h2>Contactez-moi <br><span id="nom_photographer" class="nom_photographer"></span></h2>
                     <span class="close" title="fermer le formulaire"></span>
                 </div>
                 <div class="modal-body">
@@ -117,34 +112,26 @@
                 <span class="close"></span>
                 <div class="slider">
                     <span class="slideLeft"></span>
-                    <div class="modal-body modal-bodyPhotoGallery">
-
-                    </div>
+                    <div class="modal-body modal-bodyPhotoGallery"></div>
                     <span class="slideRight"></span>
                 </div>
-
-                <!-- <input class="btn-close btn-submit button btnWelcome" value="Fermer" /> -->
             </div>
         </div>
 
         <!-- end photo gallery -->
 
-
-
-
-
+        <div class="rating_price_likes">
+        </div>
     </main>
 
 
 
-    <div class="rating_price_likes">
-    </div>
 
     <script src="https://kit.fontawesome.com/72487dcdbe.js" crossorigin="anonymous"></script>
     <!-- <script src="../js_pages/Factory/FactoryMedia.js"></script>
     <script src="../js_pages/Factory/FactoryImage.js"></script>
     <script src="../js_pages/Factory/FactoryVideo.js"></script> -->
-    <script src="../js_pages/photographer_page.js"></script>
+    <script type="module" src="../js_pages/pages/photographer.js"></script>
 </body>
 
 </html>

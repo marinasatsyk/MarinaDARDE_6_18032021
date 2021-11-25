@@ -30,7 +30,7 @@ function withDataCallBack(data) {
 
 
     for (let p of data.photographers) {
-
+        console.log(data);
         if (parseInt(p.id) === parseInt(l_Photographer_Id)) {
             CreatePhotographerHTML(p, data);
             break;
@@ -79,6 +79,7 @@ function CreatePhotographerHTML(photographer, data) {
         }
     }
 
+    console.log(photographer);
 
     //information on the header of page 
     document.querySelector(".photographer_info").innerHTML =
@@ -233,7 +234,7 @@ function CreatePhotographerHTML(photographer, data) {
 
         pRank.forEach(media => {
 
-
+            console.log(media);
             let media_id = media.id;
             let l_classActive = "";
             if (likes.indexOf("" + media_id) >= 0) {
@@ -490,12 +491,14 @@ function FactoryVideo(media) {
 }
 
 function FactoryMedia(media) {
+    console.log(media);
     switch (media.localName) {
         case "video":
             return FactoryVideo(media);
         default:
             return FactoryImage(media);
     }
+
 }
 
 //function for SHOW BIG MEDIAS after click on
