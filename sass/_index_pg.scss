@@ -98,8 +98,8 @@ header {
 .contener {
     max-width: 1400px;
     margin: 0 auto;
-    display: grid;
-    grid-template-rows: 1fr, 2fr;
+    display: flex;
+    flex-direction: column;
     @media #{$mobile-only} {
         display: unset;
     }
