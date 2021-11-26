@@ -188,37 +188,37 @@ export class Modal {
 
     listen(media, mediaView, rep) {
         let placePhoto = document.querySelector(".modal-bodyPhotoGallery");
-        let mediaWrapper = mediaView.wrapper;
         let modals = this;
+        this.curMedia = media;
+        // console.log(media);
+        console.log(mediaView.wrapper.firstElementChild);
+        // console.log(rep);
+        // console.log(mediaView);
 
-        mediaWrapper.addEventListener("click", function(event) {
-
+        mediaView.mediaElement.addEventListener("click", function() {
+            console.log(mediaView.mediaElement);
+            modals.curMedia = media;
             modals._bgPhoto.style.display = "flex";
             modals._bgPhoto.attributes[1].value = "false";
             modals.lockWindow();
             placePhoto.innerHTML = "";
-            placePhoto.appendChild(modals.mediaView(mediaView, media, rep));
-            event.preventDefault();
-            event.stopPropagation();
+            placePhoto.appendChild(modals.mediaView(mediaView, modals.curMedia, rep));
 
-            let mediaL = media;
-            modals._bgPhoto.querySelector(".slideLeft").addEventListener("click", (event) => {
-                mediaL = mediaL.before ? mediaL.before : mediaL;
+            modals._bgPhoto.querySelector(".slideLeft").addEventListener("click", () => {
+                modals.curMedia = modals.curMedia.before;
+                console.log("click L", modals.curMedia);
                 placePhoto.innerHTML = "";
-                placePhoto.appendChild(modals.mediaView(mediaView, mediaL, rep));
-                console.log("click L", mediaL.before);
-                event.preventDefault();
-                event.stopPropagation();
+
+                placePhoto.appendChild(modals.mediaView(mediaView, modals.curMedia, rep));
             })
 
-            let mediaR = media;
-            modals._bgPhoto.querySelector(".slideRight").addEventListener("click", (event) => {
+
+            modals._bgPhoto.querySelector(".slideRight").addEventListener("click", () => {
+
+                modals.curMedia = modals.curMedia.after;
                 console.log("click R");
-                mediaR = mediaR.after ? mediaR.after : mediaR;
                 placePhoto.innerHTML = "";
-                placePhoto.appendChild(modals.mediaView(mediaView, mediaR, rep));
-                event.preventDefault();
-                event.stopPropagation();
+                placePhoto.appendChild(modals.mediaView(mediaView, modals.curMedia, rep));
             })
         });
     }

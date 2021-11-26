@@ -14,7 +14,10 @@ export class MediaView extends TemplateView {
         let rep = args[1];
 
         this._wrapper.tabIndex = 0;
-        this._wrapper.appendChild(this.media(media, rep));
+        this._media = this.media(media, rep);
+
+        this._wrapper.appendChild(this._media);
+
         let desc = this.createElement("div", "description", this._wrapper);
         desc.tabIndex = 0;
         let txt_desc = this.createElement("div", "text__description", desc);
@@ -38,6 +41,9 @@ export class MediaView extends TemplateView {
     }
     get likeCounter() {
         return this._likeCounter;
+    }
+    get mediaElement() {
+        return this._media;
     }
 }
 
