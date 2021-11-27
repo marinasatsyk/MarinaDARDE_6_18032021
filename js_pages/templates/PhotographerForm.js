@@ -53,6 +53,7 @@ export class SinglePhotographerView extends TemplateView {
     }
 
     build(p) {
+
         this._wrapper.id = p.id;
         this._wrapper.ariaLabel = p.name;
 
@@ -69,10 +70,10 @@ export class SinglePhotographerView extends TemplateView {
             </span>		
         
     
-            <div class="form_modal contact">Contactez-moi</div>
+            <div class="form_modal contact" tabindex = "0">Contactez-moi</div>
 
             <div class="parent_img parent_img_perso">
-                <img src=${"."+p.firstImage} class="portrait img" alt="${p.name}">
+                <img src="../FishEye_Photos/Sample_Photos/Photographers_ID_Photos/${p.portrait}" class="portrait img" alt="${p.name}">
             </div>
             
         </section>`
@@ -89,11 +90,12 @@ export class PhotographerRatingsView extends TemplateView {
         return this.createElement("div", this._class);
     }
     build(photographer) {
+
         this._wrapper.innerHTML =
 
-            `<div class="wrapper_likes">
-        <div class="num_like" tabindex="0">${photographer.ranks}</div>
-        <span class="hidden" tabindex="0">likes</span>
+            `<div class="wrapper_likes" tabindex="0">
+        <div class="num_like"  title="Nombre total des likes du photographe est">${photographer.ranks}</div>
+        <span class="hidden">likes</span>
         <i class="fas fa-heart"></i>
     </div>
     <div class="price page_perso" tabindex="0">

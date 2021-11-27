@@ -13,7 +13,7 @@ export class MediaView extends TemplateView {
         let media = args[0];
         let rep = args[1];
 
-        this._wrapper.tabIndex = 0;
+        // this._wrapper.tabIndex = 0;
         this._media = this.media(media, rep);
 
         this._wrapper.appendChild(this._media);
@@ -78,7 +78,7 @@ export class VideoView extends MediaView {
         elem.tabIndex = 0;
         let video = this.createElement("video", "video_content allmedia", elem);
         video.src = file;
-        video.alt = media.description;
+        video.title = media.description;
         video.controls = true;
         return elem;
     }
