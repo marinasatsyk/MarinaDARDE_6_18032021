@@ -1,12 +1,14 @@
 import { TemplateView } from "./TemplateView.js";
 
+// export class PhotographerView {
+
 export class PhotographerView extends TemplateView {
     constructor(pParent, pClass = "") {
         super(pParent, pClass);
     }
 
     createContainer() {
-        return this.createElement("section", this._class);
+        return TemplateView.createElement("section", this._class);
     }
 
     build(p) {
@@ -14,32 +16,32 @@ export class PhotographerView extends TemplateView {
         this._wrapper.ariaLabel = p.name;
 
         // Image clickable du photographe
-        let lien_photographer = this.createElement("a", "", this._wrapper);
+        let lien_photographer = TemplateView.createElement("a", "", this._wrapper);
         lien_photographer.href = `./html_pages/photographer_page.html?photographe=${p.id}`;
         lien_photographer.id = "lien_photographer_" + p.id;
-        let parentimg = this.createElement("div", "parent_img", lien_photographer);
-        let img = this.createElement("img", "portrait img", parentimg);
+        let parentimg = TemplateView.createElement("div", "parent_img", lien_photographer);
+        let img = TemplateView.createElement("img", "portrait img", parentimg);
         img.src = p.firstImage;
-        console.log(p.firstImage);
+
         img.alt = ""; //"image aléatoire du photographe "+p.name;
 
         // nom du photographe
-        this.createElement("h2", "name", lien_photographer).textContent = p.name;
-        this.createElement("span", "hidden", lien_photographer).textContent = "lien vers la page du photographe " + p.name;
+        TemplateView.createElement("h2", "name", lien_photographer).textContent = p.name;
+        TemplateView.createElement("span", "hidden", lien_photographer).textContent = "lien vers la page du photographe " + p.name;
 
         // description - localisation etc ...
-        let text = this.createElement("div", "text_for_photographer", this._wrapper);
+        let text = TemplateView.createElement("div", "text_for_photographer", this._wrapper);
         text.ariaLabelledby = p.id;
         text.tabIndex = 0;
-        this.createElement("div", "city country", text).textContent = `${p.city}, ${p.country}`;
-        this.createElement("div", "tagline", text).textContent = p.tagline;
-        let price = this.createElement("div", "price", text);
-        this.createElement("span", "", price).textContent = p.price;
-        let slash = this.createElement("span", "", price);
+        TemplateView.createElement("div", "city country", text).textContent = `${p.city}, ${p.country}`;
+        TemplateView.createElement("div", "tagline", text).textContent = p.tagline;
+        let price = TemplateView.createElement("div", "price", text);
+        TemplateView.createElement("span", "", price).textContent = p.price;
+        let slash = TemplateView.createElement("span", "", price);
         slash.textContent = "/";
         slash.ariaHidden = true;
-        this.createElement("span", "hidden", price).textContent = "par";
-        this.createElement("span", "", price).textContent = "jour";
+        TemplateView.createElement("span", "hidden", price).textContent = "par";
+        TemplateView.createElement("span", "", price).textContent = "jour";
     }
 }
 
@@ -49,7 +51,7 @@ export class SinglePhotographerView extends TemplateView {
     }
 
     createContainer() {
-        return this.createElement("section", this._class);
+        return TemplateView.createElement("section", this._class);
     }
 
     build(p) {
@@ -87,7 +89,7 @@ export class PhotographerRatingsView extends TemplateView {
     }
 
     createContainer() {
-        return this.createElement("div", this._class);
+        return TemplateView.createElement("div", this._class);
     }
     build(photographer) {
 

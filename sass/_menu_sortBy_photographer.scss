@@ -39,9 +39,17 @@ section.content_media {
         margin: 0;
         padding: 0;
         background: #901C1C;
+        color: white;
+        &:hover {
+            background: $color-secondary_bg;
+            color: black;
+        }
+        &:focus {
+            background: $color-secondary_bg;
+            color: black;
+        }
     }
     li {
-        color: white;
         text-align: center;
         height: 50px;
         cursor: pointer;

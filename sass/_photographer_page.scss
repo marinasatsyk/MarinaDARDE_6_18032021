@@ -84,6 +84,14 @@ section.photographe_perso {
         align-self: start;
         margin-top: 25px;
         cursor: pointer;
+        &:hover {
+            background: $color-secondary_bg;
+            color: black;
+        }
+        &:focus {
+            background: $color-secondary_bg;
+            color: black;
+        }
     }
     .parent_img_perso {
         grid-area: c;

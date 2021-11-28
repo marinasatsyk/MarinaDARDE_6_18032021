@@ -1,12 +1,16 @@
 import { TemplateView } from "./TemplateView.js";
 
+// export class MediaView {
+
+
 export class MediaView extends TemplateView {
     constructor(pParent, pClass = "") {
         super(pParent, pClass);
     }
 
+
     createContainer() {
-        return this.createElement("article", this._class);
+        return TemplateView.createElement("article", this._class);
     }
 
     build(args) {
@@ -18,18 +22,18 @@ export class MediaView extends TemplateView {
 
         this._wrapper.appendChild(this._media);
 
-        let desc = this.createElement("div", "description", this._wrapper);
+        let desc = TemplateView.createElement("div", "description", this._wrapper);
         desc.tabIndex = 0;
-        let txt_desc = this.createElement("div", "text__description", desc);
-        let h3 = this.createElement("h3", "", txt_desc);
+        let txt_desc = TemplateView.createElement("div", "text__description", desc);
+        let h3 = TemplateView.createElement("h3", "", txt_desc);
         h3.title = "titre de la photo";
         h3.textContent = media.title;
 
-        let span = this.createElement("span", "likes", desc);
-        let likeCounter = this.createElement("span", "", span);
+        let span = TemplateView.createElement("span", "likes", desc);
+        let likeCounter = TemplateView.createElement("span", "", span);
         likeCounter.textContent = +media.likes;
-        this.createElement("span", "hidden", span).textContent = "likes";
-        let heart = this.createElement("i", "fas fa-heart iterator", span);
+        TemplateView.createElement("span", "hidden", span).textContent = "likes";
+        let heart = TemplateView.createElement("i", "fas fa-heart iterator", span);
         heart.id = "media_" + media.id;
         heart.tabIndex = 0;
         this._heart = heart;
@@ -50,9 +54,9 @@ export class MediaView extends TemplateView {
 export class ImageView extends MediaView {
     media(media, rep) {
         let file = rep + "/" + media.url.replace("-", "")
-        let elem = this.createElement("div", "img media_content");
+        let elem = TemplateView.createElement("div", "img media_content");
         elem.tabIndex = 0;
-        let img = this.createElement("img", "img_content allmedia", elem);
+        let img = TemplateView.createElement("img", "img_content allmedia", elem);
         img.src = file;
         img.alt = media.description;
         return elem;
@@ -60,12 +64,12 @@ export class ImageView extends MediaView {
 
     mediaSlideShow(media, rep) {
         let file = rep + "/" + media.url.replace("-", "")
-        let elem = this.createElement("div", "");
+        let elem = TemplateView.createElement("div", "");
         elem.tabIndex = 0;
-        let img = this.createElement("img", "", elem);
+        let img = TemplateView.createElement("img", "", elem);
         img.src = file;
         img.alt = media.description;
-        let title = this.createElement("div", "", elem);
+        let title = TemplateView.createElement("div", "", elem);
         title.textContent = media.title;
         return elem;
     }
@@ -74,9 +78,9 @@ export class ImageView extends MediaView {
 export class VideoView extends MediaView {
     media(media, rep) {
         let file = rep + "/" + media.url.replace("-", "")
-        let elem = this.createElement("div", "video media_content");
+        let elem = TemplateView.createElement("div", "video media_content");
         elem.tabIndex = 0;
-        let video = this.createElement("video", "video_content allmedia", elem);
+        let video = TemplateView.createElement("video", "video_content allmedia", elem);
         video.src = file;
         video.title = media.description;
         video.controls = true;
@@ -85,13 +89,13 @@ export class VideoView extends MediaView {
 
     mediaSlideShow(media, rep) {
         let file = rep + "/" + media.url.replace("-", "")
-        let elem = this.createElement("div", "");
+        let elem = TemplateView.createElement("div", "");
         elem.tabIndex = 0;
-        let video = this.createElement("video", "", elem);
+        let video = TemplateView.createElement("video", "", elem);
         video.src = file;
         video.alt = media.description;
         video.controls = true;
-        let title = this.createElement("div", "", elem);
+        let title = TemplateView.createElement("div", "", elem);
         title.textContent = media.title;
         return elem;
     }

@@ -7,7 +7,7 @@ export class TemplateView {
 
     get wrapper() { return this._wrapper; }
 
-    createElement(pType, pClasses, pParent = null) {
+    static createElement(pType, pClasses, pParent = null) {
         let e = document.createElement(pType);
 
         if (pClasses) {
@@ -20,6 +20,21 @@ export class TemplateView {
         if (pParent) pParent.appendChild(e);
         return e;
     }
+
+
+    // createElement(pType, pClasses, pParent = null) {
+    //     let e = document.createElement(pType);
+
+    //     if (pClasses) {
+    //         if (typeof pClasses === "string") {
+    //             let lClasses = pClasses.split(" ");
+    //             lClasses.map(c => e.classList.add(c));
+    //         }
+    //     }
+
+    //     if (pParent) pParent.appendChild(e);
+    //     return e;
+    // }
 
     render(pParam) {
         this.build(pParam);
