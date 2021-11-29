@@ -11,23 +11,22 @@ export class Modal {
     constructor(photographer) {
         this._photographer = photographer;
 
-        /*PAGE MODAL CONTACT, photo one by one*/
+        /*PAGE MODAL CONTACT*/
         this._modalBtn = document.querySelector(".contact");
-        // console.log(this._modalBtn);
-        this._modalbg = document.querySelector(".bground");
-        this._submitBtn = document.querySelector(".btn-submit")
-        this._inputIn = document.querySelectorAll('.text-control');
-        this._formData = document.querySelectorAll(".formData");
+        this._modalBg = document.querySelector(".bground");
+        this._modalClose = this._modalBg.querySelector(".close");
+        this._submitBtn = this._modalBg.querySelector(".btn-submit")
+        this._inputIn = this._modalBg.querySelectorAll('.text-control');
+        this._formData = this._modalBg.querySelectorAll(".formData");
+
+        /*PAGE MODAL SLIDESHOW*/
         this._bgPhoto = document.querySelector(".bgPhoto");
         this._bgPhotoClose = this._bgPhoto.querySelector(".close");
-        //==== for slide photo's page
         this._bgLeft = this._bgPhoto.querySelector(".slideLeft");
         this._bgRight = this._bgPhoto.querySelector(".slideRight");
         this._placePhoto = this._bgPhoto.querySelector(".modal-bodyPhotoGallery");
         this._curMedia = null;
         this._mediaDir = "";
-
-
 
         this.onCreate();
     }
@@ -35,22 +34,26 @@ export class Modal {
     onCreate() {
         // const email = document.getElementById('email');
         this.enableEvents();
-        this.closeWithKeyboard(this._modalbg, 1);
-        this.showSlidePhoto();
-        this.closeWithKeyboard(this._bgPhoto, 1)
+        this.closeWithKeyboard(this._modalBg, 1);
+        this.closeWithKeyboard(this._bgPhoto, 1);
     }
 
     enableEvents() {
         let modals = this;
-        this._modalBtn.addEventListener("click", () => { modals.launchModal() });
+        this._modalBtn.addEventListener("click", () => { modals.launchForm() });
         this._modalBtn.addEventListener("keydown", (event) => {
             if (event.key === "Enter") {
-                modals.launchModal()
+                modals.launchForm()
+            }
+        });
+        this._modalClose.addEventListener("keydown", (event) => {
+            if (event.key === "Enter") {
+                modals.close(this._modalBg);
             }
         });
 
         this._bgPhotoClose.addEventListener("click", () => { modals.close(modals._bgPhoto); })
-        this.enableForm();
+        this.enableFormEvents();
         this.enableModalEvents();
         this.disableErrorWarning();
         this.enableSlideArrows();
@@ -81,19 +84,31 @@ export class Modal {
     enableModalEvents() {
         let modals = this;
         document.querySelector('.bground .close').addEventListener("click", () => {
-            modals.close(modals._modalbg)
+            modals.close(modals._modalBg)
         })
     }
 
     // launch modal form
-    launchModal() {
-        this._modalbg.style.display = "block";
-        this._modalbg.attributes[1].value = "false";
+    launchForm() {
         this.lockWindow();
+        console.log(document.activeElement);
+        document.activeElement.blur();
+
+        this._modalBg.style.display = "block";
+        this._modalBg.attributes[1].value = "false";
         document.getElementById("nom_photographer").textContent = this._photographer.name;
+        let elem = this._modalBg.querySelector(".content");
+        console.log(elem);
+        elem.tabIndex = 0;
+        if (elem.focus) {
+            elem.focus();
+        } else if (elem.setActive) {
+            elem.setActive();
+        }
+        console.log(document.activeElement);
     }
 
-    enableForm() {
+    enableFormEvents() {
         this._inputIn.forEach(elem => elem.addEventListener("click", () => {
             elem.style.background = '#fff';
             if (elem.id == 'firstName') {
@@ -154,7 +169,7 @@ export class Modal {
             if (firstChecked == true &&
                 lastChecked == true &&
                 emailChecked == true) {
-                this.close(this._modalbg);
+                this.close(this._modalBg);
 
                 let result = {
                     firstName: document.getElementById("firstName").value,
@@ -199,6 +214,19 @@ export class Modal {
         this._curMedia = m;
         this._placePhoto.innerHTML = "";
         this._placePhoto.appendChild(this.mediaView(this._curMedia));
+        let modals = this;
+        this._placePhoto.querySelector("div").onkeydown =
+            function(event) {
+                //if (modals._bgPhoto.style.display == "flex") {
+                if (event.key === "ArrowLeft") {
+                    modals.curMedia = modals.curMedia.before;
+                    modals.focusMedia()
+                } else if (event.key === "ArrowRight") {
+                    modals.curMedia = modals.curMedia.after;
+                    modals.focusMedia()
+                }
+                //}
+            }
     }
 
     get curMedia() {
@@ -240,15 +268,24 @@ export class Modal {
             modals.curMedia = modals.curMedia.after;
         })
 
-        document.body.addEventListener("keydown", (event) => {
-            if (modals._bgPhoto.style.display == "flex") {
+        this._bgLeft.onkeydown =
+            this._bgRight.onkeydown =
+            function(event) {
+                //if (modals._bgPhoto.style.display == "flex") {
                 if (event.key === "ArrowLeft") {
                     modals.curMedia = modals.curMedia.before;
+                    modals.focusMedia()
                 } else if (event.key === "ArrowRight") {
                     modals.curMedia = modals.curMedia.after;
+                    modals.focusMedia()
                 }
+                //}
             }
-        });
+    }
+
+    focusMedia() {
+        this._placePhoto.querySelector("div").tabIndex = 0;
+        this._placePhoto.querySelector("div").focus();
     }
 
     listen(media, mediaView, rep) {
@@ -259,6 +296,7 @@ export class Modal {
             modals._bgPhoto.attributes[1].value = "false";
             modals.lockWindow();
             modals.curMedia = media;
+            modals.focusMedia();
         });
         mediaView.mediaElement.addEventListener("keydown", (event) => {
             if (event.key === "Enter") {
@@ -267,12 +305,11 @@ export class Modal {
                 modals._bgPhoto.attributes[1].value = "false";
                 modals.lockWindow();
                 modals.curMedia = media;
+                modals.focusMedia();
             }
         })
 
     }
 
-    //function for SHOW BIG MEDIAS after click on
-    showSlidePhoto() {}
 
 }

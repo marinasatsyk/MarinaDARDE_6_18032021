@@ -1,10 +1,18 @@
-body {
-    width: 80%;
+.wrapper-c {
+    max-width: 1440px;
     margin: 0 auto;
 }
 
 header {
     padding-top: 2vh;
+}
+
+main,
+header {
+    margin: 0 100px;
+    @media screen and (max-width: $tablet_max) {
+        margin: 0 5%;
+    }
 }
 
 ._lock {
@@ -29,6 +37,10 @@ header {
     .wrapper_likes {
         display: flex;
     }
+}
+
+.fa-heart {
+    margin-left: 7px;
 }
 
 .liked {
@@ -145,10 +157,14 @@ section.photographe_perso {
     justify-content: space-evenly;
     margin-top: 55px;
     gap: 3%;
+    @media screen and (max-width: $tablet_max) {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
 article.media {
-    width: 350px;
+    width: 100%;
+    max-width: 350px;
     height: 350px;
     margin-bottom: 2vh;
     a.media {
@@ -159,11 +175,11 @@ article.media {
         margin-bottom: 40px;
     }
     .media_content {
-        width: 350px;
+        width: 100%;
         height: 300px;
         overflow: hidden;
         position: relative;
-        border-radius: 5%;
+        border-radius: 5px;
         min-width: fit-content;
         img,
         video {

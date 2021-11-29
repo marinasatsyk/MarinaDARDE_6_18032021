@@ -8,7 +8,6 @@ export class MediaView extends TemplateView {
         super(pParent, pClass);
     }
 
-
     createContainer() {
         return TemplateView.createElement("article", this._class);
     }
@@ -62,17 +61,6 @@ export class ImageView extends MediaView {
         return elem;
     }
 
-    mediaSlideShow(media, rep) {
-        let file = rep + "/" + media.url.replace("-", "")
-        let elem = TemplateView.createElement("div", "");
-        elem.tabIndex = 0;
-        let img = TemplateView.createElement("img", "", elem);
-        img.src = file;
-        img.alt = media.description;
-        let title = TemplateView.createElement("div", "", elem);
-        title.textContent = media.title;
-        return elem;
-    }
 }
 
 export class VideoView extends MediaView {
@@ -84,19 +72,6 @@ export class VideoView extends MediaView {
         video.src = file;
         video.title = media.description;
         video.controls = true;
-        return elem;
-    }
-
-    mediaSlideShow(media, rep) {
-        let file = rep + "/" + media.url.replace("-", "")
-        let elem = TemplateView.createElement("div", "");
-        elem.tabIndex = 0;
-        let video = TemplateView.createElement("video", "", elem);
-        video.src = file;
-        video.alt = media.description;
-        video.controls = true;
-        let title = TemplateView.createElement("div", "", elem);
-        title.textContent = media.title;
         return elem;
     }
 }

@@ -159,50 +159,54 @@ class Application {
 
     enableSort() {
         let menu_sort = document.querySelector(".wrapper_sort");
+        let sort_media = document.querySelector(".sort_media");
         //animation menu sort media
+        let arrow_block = document.querySelector(".sort_media_arrow");
+        console.log(arrow_block);
         let arrow_sort = document.querySelector(".change_status_display");
         let likeSort = document.querySelector(".like_sort");
         let dateSort = document.querySelector(".date_sort");
         let textSort = document.querySelector(".text_sort");
-        let sortMedaiAll = document.querySelectorAll(".sortIndex");
-        console.log(sortMedaiAll);
-        // ===================== enable menu sort by click
-        arrow_sort.addEventListener("click", (event) => {
+        let sortMediaAll = document.querySelectorAll(".sortIndex");
+        console.log(sortMediaAll);
 
+        function enableSortIndex(sortMediaAll, index) {
+            sortMediaAll.forEach((elem) => { elem.tabIndex = index; })
+        }
+
+        function toggleSortMenu(event, menu_sort, arrow_sort) {
             menu_sort.classList.toggle("wrapper_anim");
             arrow_sort.classList.toggle("animation_arrow");
             event.preventDefault();
             event.stopPropagation();
+            if (menu_sort.classList.contains('wrapper_anim')) {
+                enableSortIndex(sortMediaAll, 0);
+                console.log("inde 0");
+            } else {
+                enableSortIndex(sortMediaAll, -1);
+                console.log("inde -1");
+            }
+        }
+        // ===================== enable menu sort by click
+        arrow_block.addEventListener("click", (event) => {
+            toggleSortMenu(event, menu_sort, arrow_sort, sortMediaAll);
+        });
+        sort_media.addEventListener("keydown", (event) => {
+            if (event.key === "ArrowDown")
+                toggleSortMenu(event, menu_sort, arrow_sort, sortMediaAll);
         });
         // ===================== enable menu sort by enter
         arrow_sort.addEventListener("keydown", (event) => {
-            if (event.key === "Enter") {
-                menu_sort.classList.toggle("wrapper_anim");
-                arrow_sort.classList.toggle("animation_arrow");
-                event.preventDefault();
-                event.stopPropagation();
-            }
-
-            if (menu_sort.classList.contains("wrapper_anim")) {
-                sortMedaiAll.forEach((elem) => {
-
-                    elem.tabIndex = 0;
-                    console.log(elem.tabIndex);
-                })
-            } else if (!menu_sort.classList.contains("wrapper_anim")) {
-                sortMedaiAll.forEach((elem) => {
-
-                    elem.tabIndex = -1;
-                    console.log(elem.tabIndex);
-                })
-            }
+            if (event.key === "Enter")
+                toggleSortMenu(event, menu_sort, arrow_sort, sortMediaAll);
         })
 
         // == sort by likes
-        likeSort.addEventListener("click", () => {
+        likeSort.addEventListener("click", (event) => {
             this._photographer.media = this._photographer.media.sort(function(a, b) { return a.likes > b.likes ? -1 : 1; });
             // console.log(this._photographer.media);
             this.renderMedia();
+            event.stopPropagation();
         });
         likeSort.addEventListener("keydown", (event) => {
             if (event.key === "Enter") {
