@@ -13,14 +13,14 @@ export class Modal {
 
         /*PAGE MODAL CONTACT, photo one by one*/
         this._modalBtn = document.querySelector(".contact");
-        console.log(this._modalBtn);
+        // console.log(this._modalBtn);
         this._modalbg = document.querySelector(".bground");
         this._submitBtn = document.querySelector(".btn-submit")
         this._inputIn = document.querySelectorAll('.text-control');
         this._formData = document.querySelectorAll(".formData");
         this._bgPhoto = document.querySelector(".bgPhoto");
         this._bgPhotoClose = this._bgPhoto.querySelector(".close");
-        //==== for show photos page
+        //==== for slide photo's page
         this._bgLeft = this._bgPhoto.querySelector(".slideLeft");
         this._bgRight = this._bgPhoto.querySelector(".slideRight");
         this._placePhoto = this._bgPhoto.querySelector(".modal-bodyPhotoGallery");
@@ -43,9 +43,11 @@ export class Modal {
     enableEvents() {
         let modals = this;
         this._modalBtn.addEventListener("click", () => { modals.launchModal() });
-        this._modalBtn.addEventListener("click", () => { modals.launchModal() });
-
-        // this._modalBtn.onclick = this._modalBtn.onkeydown = function() { elem.dataset.errorVisible = "false"; }
+        this._modalBtn.addEventListener("keydown", (event) => {
+            if (event.key === "Enter") {
+                modals.launchModal()
+            }
+        });
 
         this._bgPhotoClose.addEventListener("click", () => { modals.close(modals._bgPhoto); })
         this.enableForm();
@@ -258,98 +260,17 @@ export class Modal {
             modals.lockWindow();
             modals.curMedia = media;
         });
-
+        mediaView.mediaElement.addEventListener("keydown", (event) => {
+            if (event.key === "Enter") {
+                modals.mediaDir = rep;
+                modals._bgPhoto.style.display = "flex";
+                modals._bgPhoto.attributes[1].value = "false";
+                modals.lockWindow();
+                modals.curMedia = media;
+            }
+        })
 
     }
-
-
-    // mediaView(view, media, rep) {
-    //     let file = rep + "/" + media.url.replace("-", "")
-    //     let elem = view.createElement("div", "");
-    //     elem.tabIndex = 0;
-    //     if (media.type === "image") {
-    //         let img = view.createElement("img", "", elem);
-    //         img.src = file;
-    //         img.alt = media.description;
-    //     } else {
-    //         let video = view.createElement("video", "", elem);
-    //         video.src = file;
-    //         video.alt = media.description;
-    //         video.controls = true;
-    //     }
-    //     let title = view.createElement("div", "", elem);
-    //     title.textContent = media.title;
-    //     return elem;
-    // }
-
-
-    // listen(media, mediaView, rep) {
-    //     let placePhoto = document.querySelector(".modal-bodyPhotoGallery");
-    //     let modals = this;
-    //     this.curMedia = media;
-    //     // console.log(media);
-    //     console.log(mediaView.wrapper.firstElementChild);
-    //     // console.log(rep);
-    //     // console.log(mediaView);
-
-
-
-    //     mediaView.mediaElement.onclick = mediaView.mediaElement.onkeydown = function(event) {
-    //         // console.log(mediaView.mediaElement);
-
-    //         if (event.type == "click" || event.key == "Enter") {
-    //             modals.curMedia = media;
-    //             modals._bgPhoto.style.display = "flex";
-    //             modals._bgPhoto.attributes[1].value = "false";
-    //             modals.lockWindow();
-    //             placePhoto.innerHTML = "";
-    //             placePhoto.appendChild(modals.mediaView(mediaView, modals.curMedia, rep));
-    //         }
-
-
-    //         // ===========
-    //         modals._bgPhoto.querySelector(".slideLeft").addEventListener("click", () => {
-    //             modals.curMedia = modals.curMedia.before;
-    //             console.log("click L");
-    //             placePhoto.innerHTML = "";
-    //             placePhoto.appendChild(modals.mediaView(mediaView, modals.curMedia, rep));
-    //         })
-
-    //         document.body.addEventListener('keydown', function(event) {
-    //             //when modal page is opened 
-    //             if (event.key === "ArrowLeft" && modals._bgPhoto.style.display == "flex") {
-    //                 modals.curMedia = modals.curMedia.before;
-    //                 console.log("ArrowLeft");
-    //                 placePhoto.innerHTML = "";
-    //                 placePhoto.appendChild(modals.mediaView(mediaView, modals.curMedia, rep));
-    //             }
-    //         });
-
-    //         // ===========
-
-    //         modals._bgPhoto.querySelector(".slideRight").addEventListener("click", () => {
-
-    //             modals.curMedia = modals.curMedia.after;
-    //             console.log("click R");
-    //             placePhoto.innerHTML = "";
-    //             placePhoto.appendChild(modals.mediaView(mediaView, modals.curMedia, rep));
-    //         })
-
-    //         document.body.addEventListener('keydown', function(event) {
-    //             //when modal page is opened 
-    //             if (event.key === "ArrowRight" && modals._bgPhoto.style.display == "flex") {
-    //                 modals.curMedia = modals.curMedia.after;
-    //                 console.log("ArrowRight");
-    //                 placePhoto.innerHTML = "";
-    //                 placePhoto.appendChild(modals.mediaView(mediaView, modals.curMedia, rep));
-    //             }
-    //         });
-
-
-    //     };
-
-
-    // }
 
     //function for SHOW BIG MEDIAS after click on
     showSlidePhoto() {}

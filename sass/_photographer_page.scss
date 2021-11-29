@@ -32,7 +32,8 @@ header {
 }
 
 .liked {
-    color: darken(#901C1C, 20%);
+    color: red;
+    animation: liked 0.8s forwards;
 }
 
 section.photographe_perso {
@@ -143,6 +144,7 @@ section.photographe_perso {
     justify-items: center;
     justify-content: space-evenly;
     margin-top: 55px;
+    gap: 3%;
 }
 
 article.media {
@@ -200,5 +202,14 @@ article.media {
                 height: 190px;
             }
         }
+    }
+}
+
+@keyframes liked {
+    from {
+        transform: scale(1);
+    }
+    to {
+        transform: scale(1.2);
     }
 }

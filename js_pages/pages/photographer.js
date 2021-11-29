@@ -105,12 +105,23 @@ class Application {
             }
             if (view) {
                 MediaViews.push([m, view]);
+                //    option for add likes 
                 view.heart.addEventListener("click", function() {
                     this.classList.toggle("liked");
                     m.swapLikes();
                     view.likeCounter.textContent = +m.likes;
                     app._ratings.render(app._photographer);
                 })
+
+                view.heart.addEventListener("keydown", function(event) {
+                    if (event.key === "Enter") {
+                        this.classList.toggle("liked");
+                        m.swapLikes();
+                        view.likeCounter.textContent = +m.likes;
+                        app._ratings.render(app._photographer);
+                    }
+                });
+
                 if (lsLikes) {
                     if (lsLikes.filter(m_id => m_id == m.id).length > 0) {
                         m.like();
@@ -118,6 +129,8 @@ class Application {
                         view.likeCounter.textContent = +m.likes;
                     }
                 }
+
+
             }
         })
 
@@ -142,32 +155,85 @@ class Application {
         this._ratings.render(this._photographer);
     }
 
-    enableSort() {
+    // menu "trier par"
 
+    enableSort() {
+        let menu_sort = document.querySelector(".wrapper_sort");
         //animation menu sort media
         let arrow_sort = document.querySelector(".change_status_display");
+        let likeSort = document.querySelector(".like_sort");
+        let dateSort = document.querySelector(".date_sort");
+        let textSort = document.querySelector(".text_sort");
+        let sortMedaiAll = document.querySelectorAll(".sortIndex");
+        console.log(sortMedaiAll);
+        // ===================== enable menu sort by click
         arrow_sort.addEventListener("click", (event) => {
-            let menu_sort = document.querySelector(".wrapper_sort");
+
             menu_sort.classList.toggle("wrapper_anim");
             arrow_sort.classList.toggle("animation_arrow");
             event.preventDefault();
             event.stopPropagation();
         });
+        // ===================== enable menu sort by enter
+        arrow_sort.addEventListener("keydown", (event) => {
+            if (event.key === "Enter") {
+                menu_sort.classList.toggle("wrapper_anim");
+                arrow_sort.classList.toggle("animation_arrow");
+                event.preventDefault();
+                event.stopPropagation();
+            }
 
-        document.querySelector(".like_sort").addEventListener("click", () => {
+            if (menu_sort.classList.contains("wrapper_anim")) {
+                sortMedaiAll.forEach((elem) => {
+
+                    elem.tabIndex = 0;
+                    console.log(elem.tabIndex);
+                })
+            } else if (!menu_sort.classList.contains("wrapper_anim")) {
+                sortMedaiAll.forEach((elem) => {
+
+                    elem.tabIndex = -1;
+                    console.log(elem.tabIndex);
+                })
+            }
+        })
+
+        // == sort by likes
+        likeSort.addEventListener("click", () => {
             this._photographer.media = this._photographer.media.sort(function(a, b) { return a.likes > b.likes ? -1 : 1; });
-            console.log(this._photographer.media);
+            // console.log(this._photographer.media);
             this.renderMedia();
         });
+        likeSort.addEventListener("keydown", (event) => {
+            if (event.key === "Enter") {
+                this._photographer.media = this._photographer.media.sort(function(a, b) { return a.likes > b.likes ? -1 : 1; });
+                this.renderMedia();
+            }
+        });
 
-        document.querySelector(".date_sort").addEventListener("click", () => {
+        // == sort by date
+        dateSort.addEventListener("click", () => {
             this._photographer.media = this._photographer.media.sort(function(a, b) { return a.date > b.date ? -1 : 1; });
             this.renderMedia();
         });
 
-        document.querySelector(".text_sort").addEventListener("click", () => {
+        dateSort.addEventListener("keydown", (event) => {
+            if (event.key === "Enter") {
+                this._photographer.media = this._photographer.media.sort(function(a, b) { return a.date > b.date ? -1 : 1; });
+                this.renderMedia();
+            }
+        });
+        // == sort by title
+        textSort.addEventListener("click", () => {
             this._photographer.media = this._photographer.media.sort(function(a, b) { return a.title > b.title ? 1 : -1; });
             this.renderMedia();
+        });
+
+        textSort.addEventListener("keydown", (event) => {
+            if (event.key === "Enter") {
+                this._photographer.media = this._photographer.media.sort(function(a, b) { return a.title > b.title ? 1 : -1; });
+                this.renderMedia();
+            }
         });
 
     }

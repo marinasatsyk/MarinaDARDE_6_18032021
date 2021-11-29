@@ -137,6 +137,16 @@ input.btn-submit {
     border: none;
     margin-top: 15px;
     cursor: pointer;
+    &:hover {
+        animation: btn 0.8s;
+        // background: darken(#901C1C, 5%);
+        box-shadow: 3px 3px 3px darken(#901C1C, 20%);
+    }
+    &:focus {
+        animation: btn 0.8s;
+        background: darken(#901C1C, 5%);
+        border: 1px solid darken(#901C1C, 40%);
+    }
 }
 
 @keyframes modalopen {
@@ -147,5 +157,15 @@ input.btn-submit {
     to {
         transform: translateY(0px);
         opacity: 1;
+    }
+}
+
+@keyframes btn {
+    from {
+        transform: scale(1);
+    }
+    to {
+        transform: scale(1.2);
+        box-shadow: 3px 3px 3px darken(#901C1C, 20%);
     }
 }

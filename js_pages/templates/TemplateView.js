@@ -21,21 +21,6 @@ export class TemplateView {
         return e;
     }
 
-
-    // createElement(pType, pClasses, pParent = null) {
-    //     let e = document.createElement(pType);
-
-    //     if (pClasses) {
-    //         if (typeof pClasses === "string") {
-    //             let lClasses = pClasses.split(" ");
-    //             lClasses.map(c => e.classList.add(c));
-    //         }
-    //     }
-
-    //     if (pParent) pParent.appendChild(e);
-    //     return e;
-    // }
-
     render(pParam) {
         this.build(pParam);
         if (this._parent && this._wrapper) {
