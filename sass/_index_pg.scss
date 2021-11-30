@@ -21,9 +21,11 @@
 }
 
 //header
-header {
+header.index {
     display: flex;
     flex-direction: column;
+    margin-bottom: 45px;
+    padding-top: 45px;
     .invisible_link {
         text-align: center;
         margin: 20px;
@@ -116,6 +118,9 @@ main {
     .photographe {
         display: inline-block;
         width: 100%;
+        a {
+            padding-top: 45px;
+        }
         a,
         .text_for_photographer {
             display: flex;
