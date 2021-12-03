@@ -5,7 +5,7 @@ import { Modal } from "../templates/Modal.js";
 import { PhotographerRatingsView, SinglePhotographerView } from "../templates/PhotographerForm.js";
 
 /* main function get Data  **/
-class Application {
+class ApplicationPhotographerView {
 
     constructor(file) {
         this._mapPhotographers = new Map();
@@ -39,13 +39,15 @@ class Application {
         let lDataPhotographer = pData.photographers.filter(
             lPhotographer => this._photographerId === lPhotographer.id
         );
+
+
         if (lDataPhotographer.length < 1) {
             alert("l'id du photographe est incorrecte");
             return false;
         }
 
         this._photographer = new FactoryPhotographer(lDataPhotographer[0]);
-        console.log(this._photographer);
+
         this._arrayPhotographers.push(this._photographer);
         this._mapPhotographers.set(this._photographerId, this._photographer);
 
@@ -139,7 +141,7 @@ class Application {
             for (let i = 0; i < nM; i++) {
                 let i0 = (i + nM - 1) % nM;
                 let i1 = (i + nM + 1) % nM;
-                console.log(i0 + " " + i + " " + i1);
+
                 MediaViews[i0][0].after = MediaViews[i][0];
                 MediaViews[i1][0].before = MediaViews[i][0];
 
@@ -162,13 +164,13 @@ class Application {
         let sort_media = document.querySelector(".sort_media");
         //animation menu sort media
         let arrow_block = document.querySelector(".sort_media_arrow");
-        console.log(arrow_block);
+
         let arrow_sort = document.querySelector(".change_status_display");
         let likeSort = document.querySelector(".like_sort");
         let dateSort = document.querySelector(".date_sort");
         let textSort = document.querySelector(".text_sort");
         let sortMediaAll = document.querySelectorAll(".sortIndex");
-        console.log(sortMediaAll);
+
 
         function enableSortIndex(sortMediaAll, index) {
             sortMediaAll.forEach((elem) => { elem.tabIndex = index; })
@@ -181,10 +183,10 @@ class Application {
             event.stopPropagation();
             if (menu_sort.classList.contains('wrapper_anim')) {
                 enableSortIndex(sortMediaAll, 0);
-                console.log("inde 0");
+
             } else {
                 enableSortIndex(sortMediaAll, -1);
-                console.log("inde -1");
+
             }
         }
         // ===================== enable menu sort by click
@@ -204,7 +206,7 @@ class Application {
         // == sort by likes
         likeSort.addEventListener("click", (event) => {
             this._photographer.media = this._photographer.media.sort(function(a, b) { return a.likes > b.likes ? -1 : 1; });
-            // console.log(this._photographer.media);
+
             this.renderMedia();
             event.stopPropagation();
         });
@@ -243,4 +245,4 @@ class Application {
     }
 }
 
-new Application("../data.json")
+new ApplicationPhotographerView("../data.json")

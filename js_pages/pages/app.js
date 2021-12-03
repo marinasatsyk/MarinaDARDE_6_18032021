@@ -1,7 +1,7 @@
 import { FactoryMedia } from "../Factory/FactoryMedia.js";
 import { FactoryPhotographer } from "../Factory/FactoryPhotographer.js";
 import { PhotographerView } from "../templates/PhotographerForm.js";
-import { TemplateView } from "../templates/TemplateView.js";
+// import { TemplateView } from "../templates/TemplateView.js";
 
 /* main function get Data  **/
 class Application {

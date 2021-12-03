@@ -91,21 +91,21 @@ export class Modal {
     // launch modal form
     launchForm() {
         this.lockWindow();
-        console.log(document.activeElement);
+
         document.activeElement.blur();
 
         this._modalBg.style.display = "block";
         this._modalBg.attributes[1].value = "false";
         document.getElementById("nom_photographer").textContent = this._photographer.name;
         let elem = this._modalBg.querySelector(".content");
-        console.log(elem);
+
         elem.tabIndex = 0;
         if (elem.focus) {
             elem.focus();
         } else if (elem.setActive) {
             elem.setActive();
         }
-        console.log(document.activeElement);
+
     }
 
     enableFormEvents() {
@@ -235,13 +235,13 @@ export class Modal {
 
 
     mediaView(media) {
-        console.log(media);
+
         let rep = this.mediaDir;
         let file = rep + "/" + media.url.replace("-", "")
-        console.log(file);
+
         let elem = TemplateView.createElement("div", "");
         elem.tabIndex = 0;
-        // console.log(media);
+
         if (media.type === "image") {
             let img = TemplateView.createElement("img", "", elem);
             img.src = file;

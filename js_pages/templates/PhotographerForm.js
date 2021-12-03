@@ -12,6 +12,7 @@ export class PhotographerView extends TemplateView {
     }
 
     build(p) {
+
         this._wrapper.id = p.id;
         this._wrapper.ariaLabel = p.name;
 
@@ -36,7 +37,7 @@ export class PhotographerView extends TemplateView {
         TemplateView.createElement("div", "city country", text).textContent = `${p.city}, ${p.country}`;
         TemplateView.createElement("div", "tagline", text).textContent = p.tagline;
         let price = TemplateView.createElement("div", "price", text);
-        TemplateView.createElement("span", "", price).textContent = p.price;
+        TemplateView.createElement("span", "", price).textContent = p.price + "€";
         let slash = TemplateView.createElement("span", "", price);
         slash.textContent = "/";
         slash.ariaHidden = true;
@@ -46,6 +47,7 @@ export class PhotographerView extends TemplateView {
 }
 
 export class SinglePhotographerView extends TemplateView {
+
     constructor(pParent, pClass = "") {
         super(pParent, pClass);
     }

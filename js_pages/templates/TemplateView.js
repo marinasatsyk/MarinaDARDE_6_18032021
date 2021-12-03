@@ -29,14 +29,3 @@ export class TemplateView {
         return this._wrapper;
     }
 }
-
-
-class AnimalFactory {
-    constructor(pStyle, pName) {
-        if (pStyle == "dog") {
-            return new Chien(pName);
-        } else if (pStyle == "cat") {
-            return new Chat(pName);
-        }
-    }
-}
