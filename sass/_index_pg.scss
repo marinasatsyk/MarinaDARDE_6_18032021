@@ -124,6 +124,9 @@ main {
             @media #{$mobile-only} {
                 padding-top: 20px;
             }
+            // @media #{$tablet-only}{
+            //     padding-top: 20px;
+            // }
             
         }
         a,
@@ -136,6 +139,9 @@ main {
             align-items: center; 
             margin-bottom: 40px;
             @media #{$mobile-only} {
+                margin-bottom: 20px;
+            }
+            @media #{$tablet-only}{
                 margin-bottom: 20px;
             }
            
@@ -163,6 +169,9 @@ main {
             font-weight: 400;
             color: $font_color_primary;
             margin-bottom: 15px;
+            @media #{$tablet-only}{
+                font-size: 27px;
+            }
         }
         
         .city {
@@ -187,6 +196,15 @@ main {
             }
             .tagline, .price{
                 font-size: 14px;
+            }
+        }
+        @media #{$tablet-only}{
+            .city{
+                font-size: 18px;
+            }
+            .tagline, .price{
+                font-size: 14px;
+                text-align: center;
             }
         }
         .tags {
