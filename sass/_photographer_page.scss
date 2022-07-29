@@ -5,6 +5,11 @@
 
 header {
     padding-top: 2vh;
+    @media screen and (max-width: $tablet_max) {
+        .logo {
+            width: 150px;
+        }
+    }
 }
 
 main,
@@ -130,10 +135,13 @@ section.photographe_perso {
             display: flex;
             flex-direction: column;
             h2 {
-                font-size: 4vh;
+                font-size: 30px;
             }
             .city {
-                font-size: 1.4vh;
+                font-size: 15px;
+            }
+            .tagline {
+                font-size: 13px;
             }
             .tag_perso:first-child {
                 margin-left: 0;
@@ -216,6 +224,9 @@ article.media {
             .media_content {
                 // width: 335px;
                 height: 190px;
+            }
+            .description {
+                font-size: 15px;
             }
         }
     }

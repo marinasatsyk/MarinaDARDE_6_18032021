@@ -58,6 +58,7 @@ header.index {
                 grid-area: b;
                 justify-self: right;
                 font-size: 1.4vh;
+                
             }
             .nav_header__list {
                 grid-area: c;
@@ -120,6 +121,10 @@ main {
         width: 100%;
         a {
             padding-top: 45px;
+            @media #{$mobile-only} {
+                padding-top: 20px;
+            }
+            
         }
         a,
         .text_for_photographer {
@@ -128,7 +133,12 @@ main {
             width: 100%;
             min-width: fit-content;
             justify-content: center;
-            align-items: center;
+            align-items: center; 
+            margin-bottom: 40px;
+            @media #{$mobile-only} {
+                margin-bottom: 20px;
+            }
+           
         }
         .parent_img {
             border-radius: 50%;
@@ -154,13 +164,12 @@ main {
             color: $font_color_primary;
             margin-bottom: 15px;
         }
-        .text_for_photographer {
-            margin-bottom: 40px;
-        }
+        
         .city {
             font-size: 1.2vh;
             color: $color_primary_bg;
             margin-bottom: 5px;
+            
         }
         .tagline {
             font-size: 1vh;
@@ -170,6 +179,15 @@ main {
             font-size: 1vh;
             color: #757575;
             margin-bottom: 5px;
+        }
+
+        @media #{$mobile-only} {
+            .city{
+                font-size: 18px;
+            }
+            .tagline, .price{
+                font-size: 14px;
+            }
         }
         .tags {
             display: flex;
